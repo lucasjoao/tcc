@@ -5,5 +5,6 @@
 
 import pandas as pd
 
-data = pd.read_csv('../datasets/OSMI_Mental_Health_in_Tech_Survey_2018.csv')
+# path changes if you run this inside src directory
+data = pd.read_csv('datasets/OSMI_Mental_Health_in_Tech_Survey_2018.csv')
 data.head()
