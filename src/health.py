@@ -8,3 +8,30 @@ import pandas as pd
 # path changes if you run this inside src directory
 data = pd.read_csv('datasets/OSMI_Mental_Health_in_Tech_Survey_2018.csv')
 data.head()
+
+# TODO da limpeza
+# LINHAS
+# remover self-employed que nunca teve vínculo com empresa
+# remover não tech
+
+# COLUNAS para usar - empresa
+# Does your employer provide mental health benefits as part of healthcare coverage?
+# Has your employer ever formally discussed mental health (for example, as part of a wellness campaign or other official communication)?
+# Does your employer offer resources to learn more about mental health disorders and options for seeking help?
+# (???) Do you know the options for mental health care available under your employer-provided health coverage? (???)
+# (???) Is your anonymity protected if you choose to take advantage of mental health or substance abuse treatment resources provided by your employer? (???)
+# If a mental health issue prompted you to request a medical leave from work, how easy or difficult would it be to ask for that leave?
+# Overall, how much importance does your employer place on physical health?
+# Overall, how much importance does your employer place on mental health?
+
+# COLUNAS para usar - pessoa
+# Would you feel more comfortable talking to your coworkers about your physical health or your mental health?
+# Would you feel comfortable discussing a mental health issue with your direct supervisor(s)?
+# Have you ever discussed your mental health with your employer?
+# Would you feel comfortable discussing a mental health issue with your coworkers?
+# Have you ever discussed your mental health with coworkers?
+# Have you ever had a coworker discuss their or another coworker's mental health with you?
+# (???, não né) Do you have medical coverage (private insurance or state-provided) that includes treatment of mental health disorders? (???, não né)
+# (???) Do you know local or online resources to seek help for a mental health issue? (???)
+# If you have been diagnosed or treated for a mental health disorder, do you ever reveal this to clients or business contacts?
+# f you have been diagnosed or treated for a mental health disorder, do you ever reveal this to coworkers or employees?
