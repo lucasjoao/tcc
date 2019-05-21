@@ -24,6 +24,17 @@ data.head()
 # Overall, how much importance does your employer place on physical health?
 # Overall, how much importance does your employer place on mental health?
 
+# COLUNAS para usar - empresas passadas
+# Have your previous employers provided mental health benefits?
+# Were you aware of the options for mental health care provided by your previous employers?
+# Did your previous employers ever formally discuss mental health (as part of a wellness campaign or other official communication)?
+# Did your previous employers provide resources to learn more about mental health disorders and how to seek help?
+# (???) Was your anonymity protected if you chose to take advantage of mental health or substance abuse treatment resources with previous employers? (???)
+
+# COLUNAS para usar - empresa atual e empresas passadas
+# Have you observed or experienced supportive or well handled responde to a mental health issue in your current or previous workplace?
+# Have you observed or experienced an unsupportive or badly handled responde to a mental health issue in your current or previous workplace?
+
 # COLUNAS para usar - pessoa
 # Would you feel more comfortable talking to your coworkers about your physical health or your mental health?
 # Would you feel comfortable discussing a mental health issue with your direct supervisor(s)?
@@ -35,3 +46,5 @@ data.head()
 # (???) Do you know local or online resources to seek help for a mental health issue? (???)
 # If you have been diagnosed or treated for a mental health disorder, do you ever reveal this to clients or business contacts?
 # f you have been diagnosed or treated for a mental health disorder, do you ever reveal this to coworkers or employees?
+# do you believe your productivity is ever affected by a mental health issue?
+# Would you have felt more comfortable talking to your previous employer about your physical health or your mental health?
