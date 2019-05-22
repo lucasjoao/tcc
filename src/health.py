@@ -14,6 +14,10 @@ data.head()
 # remover self-employed que nunca teve vínculo com empresa
 # remover não tech
 
+# TODO das técnicas
+# usar regressão linear pada ds
+# usar gráficos para dv
+
 # COLUNAS para usar - empresa
 # Does your employer provide mental health benefits as part of healthcare coverage?
 # Has your employer ever formally discussed mental health (for example, as part of a wellness campaign or other official communication)?
@@ -48,3 +52,13 @@ data.head()
 # f you have been diagnosed or treated for a mental health disorder, do you ever reveal this to coworkers or employees?
 # do you believe your productivity is ever affected by a mental health issue?
 # Would you have felt more comfortable talking to your previous employer about your physical health or your mental health?
+# Would you bring up your mental health with a potential employer in an interview?
+# How willing would you be to share with friends and family that you have a mental illness?
+# Did you ever discuss your mental health with a previous coworker(s)?
+# Did you ever have a previous coworker discuss their or another coworker's mental health with you?
+
+# COLUNAS para usar de resultado
+# (???) Are you openly identified at work as a person with a mental health issue? (???)
+# Do you currently have a mental health disorder?
+# Have you had a mental health disorder in the past?
+# Have you ever sought treatment for a mental health disorder from a mental health professional?
