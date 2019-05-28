@@ -1,18 +1,31 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[1]:
-
 import pandas as pd
 
-# path changes if you run this inside src directory
-data = pd.read_csv('datasets/OSMI_Mental_Health_in_Tech_Survey_2018.csv')
-data.head()
+if __name__ == '__main__':
+    # path changes if you run this inside src directory
+    data = pd.read_csv('datasets/OSMI_Mental_Health_in_Tech_Survey_2018.csv')
 
-# TODO da limpeza
-# LINHAS
-# remover self-employed que nunca teve vínculo com empresa
-# remover não tech
+    print('Original data shape:', data.shape)
+
+    qst_01 = '<strong>Are you self-employed?</strong>'
+    qst_02 = 'Is your primary role within your company related to tech/IT?'
+    qst_03 = '<strong>Do you have previous employers?</strong>'
+
+    is_self_employed = data[qst_01] == 1
+    is_tech = data[qst_02] == 1.0
+    has_previous_employers = data[qst_03] == 1
+
+    filter_condition = (~is_self_employed | has_previous_employers) & is_tech
+    data_filtered = data[filter_condition]
+
+    print('Filtered data shape:', data_filtered.shape)
+
+    # TODO: use next line way to get columns
+    tmp_data = data_filtered[['#', qst_01]].copy()
+    print(tmp_data.shape)
+    print(tmp_data.head())
 
 # TODO das técnicas
 # usar regressão linear pada ds
