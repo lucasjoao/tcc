@@ -2,7 +2,7 @@
 
 ### Recomendações
 
-- utilizar `pyenv` para setar versão do python
+- utilizar `pyenv` para setar versão `3.7.4` do python
 - utilizar `pip` para instalar o `pipenv` somente para o usuário
 - utilizar `pipenv` para cuidar das dependências
 
