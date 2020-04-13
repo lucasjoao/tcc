@@ -1,7 +1,7 @@
 # em milhoes
 LUCRO_LIQUIDO = {'inter20181T': 11.2,
                  'inter20192T': 45,
-                 'inter20193T': 11.8
+                 'inter20193T': 11.8,
                  'inter20194T': 24.7}
 
 # em milhoes
