@@ -1,5 +1,9 @@
 # em milhoes
 LUCRO_LIQUIDO = {
+                 'ambev20191T': 2749,
+                 'ambev20192T': 2615,
+                 'ambev20193T': 2604,
+                 'ambev20194T': 4219,
                  'gerdau20153T': -193,
                  'gerdau20171T': 823.5,
                  'gerdau20184T': 389,
@@ -11,11 +15,19 @@ LUCRO_LIQUIDO = {
                  'itau20172T': 6792,
                  'itau20181T': 6557,
                  'itau20192T': 6690,
-                 'itau20193T': 5505
+                 'itau20193T': 5505,
+                 'weg20102T': 116,
+                 'weg20151T': 245.9,
+                 'weg20172T': 272.1,
+                 'weg20192T': 389
               }
 
 # em milhoes
 PATRIMONIO_LIQUIDO = {
+                      'ambev20191T': 60490,
+                      'ambev20192T': 62928,
+                      'ambev20193T': 67021,
+                      'ambev20194T': 62556,
                       'gerdau20153T': 36012.3,
                       'gerdau20171T': 24663.4,
                       'gerdau20184T': 25938.5,
@@ -27,10 +39,18 @@ PATRIMONIO_LIQUIDO = {
                       'itau20172T': 138492,
                       'itau20181T': 136389,
                       'itau20192T': 143813,
-                      'itau20193T': 143862
+                      'itau20193T': 143862,
+                      'weg20102T': 2445,
+                      'weg20151T': 5302,
+                      'weg20172T': 6348,
+                      'weg20192T': 8017
                      }
 
 ROE = {
+       'ambev20191T': 4.54,
+       'ambev20192T': 4.15,
+       'ambev20193T': 3.88,
+       'ambev20194T': 6.74,
        'gerdau20153T': -0.53,
        'gerdau20171T': 3.33,
        'gerdau20184T': 1.49,
@@ -42,5 +62,9 @@ ROE = {
        'itau20172T': 4.90,  # diff from fundamentus.com.br
        'itau20181T': 4.88,
        'itau20192T': 4.65,
-       'itau20193T': 3.82
+       'itau20193T': 3.82,
+       'weg20102T': 4.74,  # diff from fundamentus.com.br
+       'weg20151T': 4.63,
+       'weg20172T': 4.28,
+       'weg20192T': 4.85
        }
