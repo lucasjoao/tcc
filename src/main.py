@@ -1,6 +1,7 @@
 import PyPDF2
 from data_dir_scan import data_dir_scan
 
+
 files_name = data_dir_scan.get_files_name()
 print(len(files_name))
 
