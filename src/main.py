@@ -1,19 +1,16 @@
 import PyPDF2
+from data_dir_scan import data_dir_scan
 
-pdf_file = open('../data/weg_20190724ReleaseResultados2T19.pdf', 'rb')
-# TODO: pode gerar resultado melhor
-# pdf_file = open('../data/itau_DemonstracoesContabeisCompletas2T2019.pdf', 'rb')
-# TODO: precisa ser decriptado
-# pdf_file = open('../data/bancointer_itr30062019.pdf', 'rb')
-# pdf_file = open('../data/ambev_Q2_2019_Release_Port.pdf', 'rb')
-# pdf_file = open('../data/gerdau_rt.pdf', 'rb')
+files_name = data_dir_scan.get_files_name()
+print(len(files_name))
 
-pdf_reader = PyPDF2.PdfFileReader(pdf_file)
+for file_name in files_name:
+    pdf_reader = PyPDF2.PdfFileReader(data_dir_scan.get_data_directory() + file_name)
 
-pdf_text = ''
-for i in range(pdf_reader.numPages):
-    pdf_page = pdf_reader.getPage(i)
-    pdf_text += pdf_page.extractText()
+    pdf_text = ''
+    for i in range(pdf_reader.numPages):
+        pdf_page = pdf_reader.getPage(i)
+        pdf_text += pdf_page.extractText()
 
-print(pdf_text)
-print(pdf_reader.numPages)
+    print(pdf_text)
+    print(pdf_reader.numPages)
