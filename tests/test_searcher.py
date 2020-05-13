@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import unittest
-from src import searcher as searcher
+from src.plataform import searcher as searcher
 
 
 class TestsSearcher(unittest.TestCase):

@@ -1,7 +1,7 @@
 
 import unittest
 from unittest import mock
-from src import data_dir_scan as dds
+from src.plataform import data_dir_scan as dds
 
 
 class TestsDataDirScan(unittest.TestCase):
