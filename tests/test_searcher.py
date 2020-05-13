@@ -12,9 +12,13 @@ class TestsSearcher(unittest.TestCase):
         result = self.searcher.run('empresa x teve o ROE 1.25%')
         self.assertEqual(result, '1.25%')
 
-    def test_roe_not_found(self):
+    def test_not_found(self):
         result = self.searcher.run('empresa x não divulga o indicador que eu procuro explicitamente')
         self.assertEqual(result, 'Nada encontrado!')
+
+    def test_return_on_equity_found(self):
+        result = self.searcher.run('retorno líquido é y na empresa x que tem o retorno on equity 10%')
+        self.assertEqual(result, '10%')
 
 
 if __name__ == '__main__':
