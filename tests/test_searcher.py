@@ -14,7 +14,7 @@ class TestsSearcher(unittest.TestCase):
 
     def test_not_found(self):
         result = self.searcher.run('empresa x não divulga o indicador que eu procuro explicitamente')
-        self.assertEqual(result, 'Nada encontrado!')
+        self.assertIsNone(result)
 
     def test_return_on_equity_found(self):
         result = self.searcher.run('retorno líquido é y na empresa x que tem o retorno on equity 10%')
