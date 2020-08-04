@@ -7,8 +7,8 @@ class RoeCalculator:
     def __init__(self, pdf_text):
         self.pdf_text = pdf_text
         self.searcherRoe = searcher.Searcher(['ROE', 'retorno on equity'])
-        self.searcherPatrimonioLiquido = searcher.Searcher('patrimônio líquido')
-        self.searcherLucroLiquido = searcher.Searcher('lucro líquido')
+        self.searcherPatrimonioLiquido = searcher.Searcher(['patrimônio líquido'])
+        self.searcherLucroLiquido = searcher.Searcher(['lucro líquido'])
 
     def get_patrimonio_liquido(self):
         patrimonio_liquido = self.searcherPatrimonioLiquido.run(self.pdf_text)
@@ -30,5 +30,6 @@ class RoeCalculator:
             patrimonio_liquido = self.get_patrimonio_liquido()
             if lucro_liquido is not None and patrimonio_liquido is not None:
                 roe_value = (lucro_liquido / patrimonio_liquido) * 100
+                roe_value = round(roe_value, 2)
 
         return roe_value
