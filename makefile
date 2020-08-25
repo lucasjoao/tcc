@@ -1,3 +1,6 @@
+main:
+	@poetry run python src/main.py
+
 test:
 	@poetry run python  -m unittest
 
