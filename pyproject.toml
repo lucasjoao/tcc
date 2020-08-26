@@ -9,6 +9,7 @@ license = "MIT"
 python = "^3.7"
 PyPDF2 = "^1.26"
 nltk = "^3.5"
+numpy = "^1.19"
 
 [tool.poetry.dev-dependencies]
 autopep8 = "^1.4"
