@@ -2,7 +2,7 @@ import PyPDF2
 import nltk
 
 from src.plataform import data_dir_scan as dds
-from nltk.tokenize import word_tokenize
+from nltk.tokenize import word_tokenize, sent_tokenize
 from nltk.corpus import stopwords
 from nltk.stem import RSLPStemmer
 
@@ -13,32 +13,58 @@ nltk.download('averaged_perceptron_tagger')
 nltk.download('maxent_ne_chunker')
 nltk.download('words')
 
-pdf_reader = PyPDF2.PdfFileReader(dds.data_dir_scan.get_data_directory() + 'ambev_2019_1T.pdf')
-# pdf_reader = PyPDF2.PdfFileReader(dds.data_dir_scan.get_data_directory() + 'bancointer_2018_1T.pdf')
-# pdf_reader = PyPDF2.PdfFileReader(dds.data_dir_scan.get_data_directory() + 'gerdau_2019_2T.pdf')
-# pdf_reader = PyPDF2.PdfFileReader(dds.data_dir_scan.get_data_directory() + 'itau_2019_2T.pdf')
-# pdf_reader = PyPDF2.PdfFileReader(dds.data_dir_scan.get_data_directory() + 'weg_2019_2T.pdf')
+pt_br = 'portuguese'
 
-pdf_text = ''
-for i in range(pdf_reader.numPages):
-    pdf_page = pdf_reader.getPage(i)
-    pdf_text += pdf_page.extractText()
 
-text_tokens = word_tokenize(pdf_text)
+def extract_text(pdf_reader):
+    pdf_text = ''
+    for i in range(pdf_reader.numPages):
+        pdf_page = pdf_reader.getPage(i)
+        pdf_text += pdf_page.extractText()
 
-tokens_without_stopwords = [token for token in text_tokens if not token in stopwords.words('portuguese')]
+    return pdf_text
 
-stemmer = RSLPStemmer()
-text_tokens_stemming = ''
-for token in tokens_without_stopwords:
-    text_tokens_stemming += stemmer.stem(token) + ' '
 
-for token in tokens_without_stopwords:
-    tagged = nltk.pos_tag(token)
-    named_ent = nltk.ne_chunk(tagged, binary=False)
-    print(named_ent)
+def preprocess(pdf_text):
+    text_sentences = sent_tokenize(pdf_text, pt_br)
+    text_sentences_in_tokens = [word_tokenize(sentence) for sentence in text_sentences]
 
-# print(tokens_without_stopwords)
-# print(len(tokens_without_stopwords))
-# print(len(text_tokens))
-# print(text_tokens_stemming)
+    preprocess_result = []
+    for sentence in text_sentences_in_tokens:
+        sentence_result = []
+        for token in sentence:
+            if token not in stopwords.words(pt_br):
+                sentence_result.append(token)
+
+        preprocess_result.append(sentence_result)
+
+    return preprocess_result
+
+
+def stemming(sentences_tokens):
+    stemmer = RSLPStemmer()
+
+    stemming_result = []
+    for sentence in sentences_tokens:
+        sentence_result = []
+        for token in sentence:
+            sentence_result.append(stemmer.stem(token))
+
+        stemming_result.append(sentence_result)
+
+    return stemming_result
+
+
+def ner(tokens):
+    # for token in tokens_without_stopwords:
+    #     tagged = nltk.pos_tag(token)
+    #     named_ent = nltk.ne_chunk(tagged, binary=False)
+    #     print(named_ent)
+    pass
+
+
+pdf_reader = PyPDF2.PdfFileReader(dds.data_dir_scan.get_data_directory() + 'weg_2019_2T.pdf')
+pdf_text = extract_text(pdf_reader)
+preprocessed_text = preprocess(pdf_text)
+stemming_text = stemming(preprocessed_text)
+print(stemming_text[1])
