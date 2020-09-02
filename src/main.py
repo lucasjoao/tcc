@@ -54,6 +54,9 @@ def stemming(sentences_tokens):
 
     return stemming_result
 
+def roe_stemming():
+    stemmer = RSLPStemmer()
+    return frozenset([stemmer.stem('patrimônio'), stemmer.stem('lucro'), stemmer.stem('líquido')])
 
 def ner(tokens):
     # for token in tokens_without_stopwords:
@@ -67,4 +70,4 @@ pdf_reader = PyPDF2.PdfFileReader(dds.data_dir_scan.get_data_directory() + 'weg_
 pdf_text = extract_text(pdf_reader)
 preprocessed_text = preprocess(pdf_text)
 stemming_text = stemming(preprocessed_text)
-print(stemming_text[1])
+print(roe_stemming())
