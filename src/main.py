@@ -66,6 +66,31 @@ def patrimonio_liquido_stemming():
     return frozenset([stemmer.stem('patrimônio'), stemmer.stem('líquido')])
 
 
+def ir_stemming():
+    stemmer = RSLPStemmer()
+    return frozenset([stemmer.stem('imposto'), stemmer.stem('renda')])
+
+
+def receita_operacional_liquida_stemming():
+    stemmer = RSLPStemmer()
+    return frozenset([stemmer.stem('receita'), stemmer.stem('operacional'), stemmer.stem('líquida')])
+
+
+def ticket_stemming():
+    stemmer = RSLPStemmer()
+    return frozenset([stemmer.stem('wege3')])
+
+
+def ativos_fixos_stemming():
+    stemmer = RSLPStemmer()
+    return frozenset([stemmer.stem('ativos'), stemmer.stem('fixos')])
+
+
+def investimentos_stemming():
+    stemmer = RSLPStemmer()
+    return frozenset([stemmer.stem('investimentos')])
+
+
 def candidate_sentences(text, searcher_set):
     candidates = []
     for sentence in text:
@@ -106,15 +131,44 @@ def ner(tokens):
     pass
 
 
-pdf_reader = PyPDF2.PdfFileReader(dds.data_dir_scan.get_data_directory() + 'weg_2019_2T.pdf')
-pdf_text = extract_text(pdf_reader)
-preprocessed_text = preprocess(pdf_text)
-stemming_text = stemming(preprocessed_text)
-ll_stemming_set = lucro_liquido_stemming()
-pl_stemming_set = patrimonio_liquido_stemming()
+def sentence_viewer(sentences):
+    for sentence in sentences:
+        print(" ".join(sentence))
+        print("\n")
 
-ll_candidate_sentences = candidate_sentences(stemming_text, ll_stemming_set)
-pl_candidate_sentences = candidate_sentences(stemming_text, pl_stemming_set)
 
-print(number_value_searcher(ll_candidate_sentences))
-print(number_value_searcher(pl_candidate_sentences))
+def ll_and_pl_to_file(filename):
+    pdf_reader = PyPDF2.PdfFileReader(dds.data_dir_scan.get_data_directory() + filename)
+    pdf_text = extract_text(pdf_reader)
+    preprocessed_text = preprocess(pdf_text)
+    stemming_text = stemming(preprocessed_text)
+    ll_stemming_set = lucro_liquido_stemming()
+    pl_stemming_set = patrimonio_liquido_stemming()
+
+    ll_candidate_sentences = candidate_sentences(stemming_text, ll_stemming_set)
+    pl_candidate_sentences = candidate_sentences(stemming_text, pl_stemming_set)
+
+    # filtering
+    ll_false_candidate_sentences = candidate_sentences(ll_candidate_sentences, ir_stemming())
+    ll_candidate_sentences = [sentence for sentence in ll_candidate_sentences if sentence not in ll_false_candidate_sentences]
+
+    ll_false_candidate_sentences = candidate_sentences(ll_candidate_sentences, receita_operacional_liquida_stemming())
+    ll_candidate_sentences = [sentence for sentence in ll_candidate_sentences if sentence not in ll_false_candidate_sentences]
+
+    ll_false_candidate_sentences = candidate_sentences(ll_candidate_sentences, ticket_stemming())
+    ll_candidate_sentences = [sentence for sentence in ll_candidate_sentences if sentence not in ll_false_candidate_sentences]
+
+    ll_false_candidate_sentences = candidate_sentences(ll_candidate_sentences, ativos_fixos_stemming())
+    ll_candidate_sentences = [sentence for sentence in ll_candidate_sentences if sentence not in ll_false_candidate_sentences]
+
+    ll_false_candidate_sentences = candidate_sentences(ll_candidate_sentences, investimentos_stemming())
+    ll_candidate_sentences = [sentence for sentence in ll_candidate_sentences if sentence not in ll_false_candidate_sentences]
+
+    print(number_value_searcher(ll_candidate_sentences))
+    print(number_value_searcher(pl_candidate_sentences))
+
+
+ll_and_pl_to_file('weg_2010_2T.pdf')
+ll_and_pl_to_file('weg_2015_1T.pdf')
+ll_and_pl_to_file('weg_2017_2T.pdf')
+ll_and_pl_to_file('weg_2019_2T.pdf')
