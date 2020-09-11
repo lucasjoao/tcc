@@ -91,12 +91,35 @@ def investimentos_stemming():
     return frozenset([stemmer.stem('investimentos')])
 
 
+def variacao_stemming():
+    stemmer = RSLPStemmer()
+    return frozenset([stemmer.stem('variação')])
+
+
 def candidate_sentences(text, searcher_set):
     candidates = []
     for sentence in text:
         if searcher_set < frozenset(sentence):
             candidates.append(sentence)
     return candidates
+
+
+def is_searcher_words_in_sequence(candidates, searcher_set):
+    candidates_filtered = []
+    for sentence in candidates:
+        first_searcher_element, *_ = searcher_set
+        searcher_set_size = len(searcher_set)
+        position = sentence.index(first_searcher_element)
+
+        hits = 0
+        for i in range(1, searcher_set_size):
+            if sentence[position + i] in searcher_set or sentence[position - i] in searcher_set:
+                hits += 1
+
+        if (searcher_set_size - 1) == hits:
+            candidates_filtered.append(sentence)
+
+    return candidates_filtered
 
 
 def is_number(string):
@@ -138,6 +161,7 @@ def sentence_viewer(sentences):
 
 
 def ll_and_pl_to_file(filename):
+    print(filename)
     pdf_reader = PyPDF2.PdfFileReader(dds.data_dir_scan.get_data_directory() + filename)
     pdf_text = extract_text(pdf_reader)
     preprocessed_text = preprocess(pdf_text)
@@ -149,6 +173,9 @@ def ll_and_pl_to_file(filename):
     pl_candidate_sentences = candidate_sentences(stemming_text, pl_stemming_set)
 
     # filtering
+    ll_candidate_sentences = is_searcher_words_in_sequence(ll_candidate_sentences, ll_stemming_set)
+    pl_candidate_sentences = is_searcher_words_in_sequence(pl_candidate_sentences, pl_stemming_set)
+
     ll_false_candidate_sentences = candidate_sentences(ll_candidate_sentences, ir_stemming())
     ll_candidate_sentences = [sentence for sentence in ll_candidate_sentences if sentence not in ll_false_candidate_sentences]
 
@@ -164,6 +191,9 @@ def ll_and_pl_to_file(filename):
     ll_false_candidate_sentences = candidate_sentences(ll_candidate_sentences, investimentos_stemming())
     ll_candidate_sentences = [sentence for sentence in ll_candidate_sentences if sentence not in ll_false_candidate_sentences]
 
+    ll_false_candidate_sentences = candidate_sentences(ll_candidate_sentences, variacao_stemming())
+    ll_candidate_sentences = [sentence for sentence in ll_candidate_sentences if sentence not in ll_false_candidate_sentences]
+
     print(number_value_searcher(ll_candidate_sentences))
     print(number_value_searcher(pl_candidate_sentences))
 
@@ -172,3 +202,5 @@ ll_and_pl_to_file('weg_2010_2T.pdf')
 ll_and_pl_to_file('weg_2015_1T.pdf')
 ll_and_pl_to_file('weg_2017_2T.pdf')
 ll_and_pl_to_file('weg_2019_2T.pdf')
+ll_and_pl_to_file('gerdau_2017_1T.pdf')
+# TODO: preciso de mais 5 relatórios (1 gerdau e 4 de duas empresas)
