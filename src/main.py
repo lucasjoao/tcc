@@ -96,6 +96,31 @@ def variacao_stemming():
     return frozenset([stemmer.stem('variação')])
 
 
+def dividendos_stemming():
+    stemmer = RSLPStemmer()
+    return frozenset([stemmer.stem('dividendos')])
+
+
+def divida_stemming():
+    stemmer = RSLPStemmer()
+    return frozenset([stemmer.stem('dívida')])
+
+
+def imposto_stemming():
+    stemmer = RSLPStemmer()
+    return frozenset([stemmer.stem('imposto')])
+
+
+def ebitda_stemming():
+    stemmer = RSLPStemmer()
+    return frozenset([stemmer.stem('ebitda')])
+
+
+def recuperacao_stemming():
+    stemmer = RSLPStemmer()
+    return frozenset([stemmer.stem('recuperação')])
+
+
 def candidate_sentences(text, searcher_set):
     candidates = []
     for sentence in text:
@@ -194,6 +219,21 @@ def ll_and_pl_to_file(filename):
     ll_false_candidate_sentences = candidate_sentences(ll_candidate_sentences, variacao_stemming())
     ll_candidate_sentences = [sentence for sentence in ll_candidate_sentences if sentence not in ll_false_candidate_sentences]
 
+    ll_false_candidate_sentences = candidate_sentences(ll_candidate_sentences, dividendos_stemming())
+    ll_candidate_sentences = [sentence for sentence in ll_candidate_sentences if sentence not in ll_false_candidate_sentences]
+
+    ll_false_candidate_sentences = candidate_sentences(ll_candidate_sentences, divida_stemming())
+    ll_candidate_sentences = [sentence for sentence in ll_candidate_sentences if sentence not in ll_false_candidate_sentences]
+
+    ll_false_candidate_sentences = candidate_sentences(ll_candidate_sentences, imposto_stemming())
+    ll_candidate_sentences = [sentence for sentence in ll_candidate_sentences if sentence not in ll_false_candidate_sentences]
+
+    ll_false_candidate_sentences = candidate_sentences(ll_candidate_sentences, ebitda_stemming())
+    ll_candidate_sentences = [sentence for sentence in ll_candidate_sentences if sentence not in ll_false_candidate_sentences]
+
+    ll_false_candidate_sentences = candidate_sentences(ll_candidate_sentences, recuperacao_stemming())
+    ll_candidate_sentences = [sentence for sentence in ll_candidate_sentences if sentence not in ll_false_candidate_sentences]
+
     print(number_value_searcher(ll_candidate_sentences))
     print(number_value_searcher(pl_candidate_sentences))
 
@@ -203,4 +243,7 @@ ll_and_pl_to_file('weg_2015_1T.pdf')
 ll_and_pl_to_file('weg_2017_2T.pdf')
 ll_and_pl_to_file('weg_2019_2T.pdf')
 ll_and_pl_to_file('gerdau_2017_1T.pdf')
-# TODO: preciso de mais 5 relatórios (1 gerdau e 4 de duas empresas)
+ll_and_pl_to_file('gerdau_2015_3T.pdf')
+ll_and_pl_to_file('engie_2019_2T.pdf')
+ll_and_pl_to_file('engie_2020_2T.pdf')
+# TODO: preciso de mais 2 relatórios (2 de uma empresa)
