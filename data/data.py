@@ -1,9 +1,13 @@
+# NÃO ESTÁ COMPLETO E NEM GARANTO CERTEZA EM TODOS OS VALORES
+
 # em milhoes
 LUCRO_LIQUIDO = {
                  'ambev20191T': 2749,
                  'ambev20192T': 2615,
                  'ambev20193T': 2604,
                  'ambev20194T': 4219,
+                 'engie20192T': 385.4,
+                 'engie20202T': 765.8,
                  'gerdau20153T': -193,
                  'gerdau20171T': 823.5,
                  'gerdau20184T': 389,
