@@ -171,6 +171,14 @@ def number_value_searcher(candidate_sentences):
     return results
 
 
+def clean_search_result(dirty_result):
+    clean_result = []
+    for dict_result in dirty_result:
+        if not is_number(dict_result['possibleSize']):
+            clean_result.append(dict_result)
+    return clean_result
+
+
 def ner(tokens):
     # for token in tokens_without_stopwords:
     #     tagged = nltk.pos_tag(token)
@@ -234,8 +242,18 @@ def ll_and_pl_to_file(filename):
     ll_false_candidate_sentences = candidate_sentences(ll_candidate_sentences, recuperacao_stemming())
     ll_candidate_sentences = [sentence for sentence in ll_candidate_sentences if sentence not in ll_false_candidate_sentences]
 
-    print(number_value_searcher(ll_candidate_sentences))
-    print(number_value_searcher(pl_candidate_sentences))
+    ll_dirty_result = number_value_searcher(ll_candidate_sentences)
+    pl_dirty_result = number_value_searcher(pl_candidate_sentences)
+
+    print('Candidatos para lucro líquido antes da limpeza:')
+    print(ll_dirty_result)
+    print('Candidatos para patrimônio líquido antes da limpeza:')
+    print(pl_dirty_result)
+
+    print('Candidatos finais para lucro líquido:')
+    print(clean_search_result(ll_dirty_result))
+    print('Candidatos finais para patrimônio líquido:')
+    print(clean_search_result(pl_dirty_result))
 
 
 ll_and_pl_to_file('weg_2010_2T.pdf')
@@ -246,4 +264,5 @@ ll_and_pl_to_file('gerdau_2017_1T.pdf')
 ll_and_pl_to_file('gerdau_2015_3T.pdf')
 ll_and_pl_to_file('engie_2019_2T.pdf')
 ll_and_pl_to_file('engie_2020_2T.pdf')
-# TODO: preciso de mais 2 relatórios (2 de uma empresa)
+ll_and_pl_to_file('fleury_2019_3T.pdf')
+ll_and_pl_to_file('fleury_2020_2T.pdf')
