@@ -174,7 +174,7 @@ def number_value_searcher(candidate_sentences):
 def clean_search_result(dirty_result):
     clean_result = []
     for dict_result in dirty_result:
-        if not is_number(dict_result['possibleSize']):
+        if not is_number(dict_result['possibleSize'])[0]:
             clean_result.append(dict_result)
     return clean_result
 
