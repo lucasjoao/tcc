@@ -155,7 +155,7 @@ def is_number(string):
         return (False, math.nan)
 
 
-def number_value_searcher(candidate_sentences):
+def monetary_value_searcher(candidate_sentences):
     invalid_positions = frozenset([0, 1])
     results = []
     for sentence in candidate_sentences:
@@ -168,6 +168,30 @@ def number_value_searcher(candidate_sentences):
                     results.append({'number': number, 'possibleSize': sentence[position + 1]})
 
             position += 1
+    return results
+
+
+def after_target_set_number_value_searcher(candidate_sentences, target_set):
+    results = []
+    target_set_size = len(target_set)
+    for sentence in candidate_sentences:
+        position = 0
+        for token in sentence:
+            possible_result = True
+            was_casted, number = is_number(token)
+            if was_casted:
+                for i in range(1, target_set_size):
+                    if sentence[position - i] not in target_set:
+                        possible_result = False
+                        break
+
+                if possible_result:
+                    # FIXME: isso pode quebrar se for o último
+                    results.append({'number': number, 'possibleSize': sentence[position + 1]})
+
+
+            position += 1
+
     return results
 
 
@@ -243,8 +267,8 @@ def ll_and_pl_to_file(filename):
     ll_false_candidate_sentences = candidate_sentences(ll_candidate_sentences, recuperacao_stemming())
     ll_candidate_sentences = [sentence for sentence in ll_candidate_sentences if sentence not in ll_false_candidate_sentences]
 
-    ll_dirty_result = number_value_searcher(ll_candidate_sentences)
-    pl_dirty_result = number_value_searcher(pl_candidate_sentences)
+    ll_dirty_result = monetary_value_searcher(ll_candidate_sentences)
+    pl_dirty_result = monetary_value_searcher(pl_candidate_sentences)
 
     print('Candidatos para lucro líquido antes da limpeza:')
     print(ll_dirty_result)
