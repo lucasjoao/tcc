@@ -195,6 +195,7 @@ def sentence_viewer(sentences):
 
 def ll_and_pl_to_file(filename):
     print(filename)
+    print(80 * '-')
     pdf_reader = PyPDF2.PdfFileReader(dds.data_dir_scan.get_data_directory() + filename)
     pdf_text = extract_text(pdf_reader)
     preprocessed_text = preprocess(pdf_text)
@@ -247,13 +248,14 @@ def ll_and_pl_to_file(filename):
 
     print('Candidatos para lucro líquido antes da limpeza:')
     print(ll_dirty_result)
-    print('Candidatos para patrimônio líquido antes da limpeza:')
-    print(pl_dirty_result)
-
     print('Candidatos finais para lucro líquido:')
     print(clean_search_result(ll_dirty_result))
+    print(80 * '-')
+    print('Candidatos para patrimônio líquido antes da limpeza:')
+    print(pl_dirty_result)
     print('Candidatos finais para patrimônio líquido:')
     print(clean_search_result(pl_dirty_result))
+    print(80 * '-')
 
 
 ll_and_pl_to_file('weg_2010_2T.pdf')
