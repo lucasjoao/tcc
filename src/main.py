@@ -1,6 +1,7 @@
 import PyPDF2
 import nltk
 import math
+import re
 
 from src.plataform import data_dir_scan as dds
 from nltk.tokenize import word_tokenize, sent_tokenize
@@ -148,10 +149,34 @@ def is_searcher_words_in_sequence(candidates, searcher_set):
 
 
 def is_number(string):
+    if string.count('.') <= 1:
+        try:
+            # works fine with '1234', '1234.12' and '1234.0'
+            number = float(string.replace(',', '.'))
+            return (True, number)
+        except ValueError:
+            return (False, math.nan)
+    else:
+        return is_number_with_more_dots(string)
+
+
+def is_number_with_more_dots(string):
     try:
-        number = float(string.replace(',', '.'))
+        # works fine with '1.234.567'
+        number = float(string.replace('.', ''))
         return (True, number)
     except ValueError:
+        return is_number_with_more_dots_and_decimal(string)
+
+
+# FIXME: se isso daqui jogar exception no float, entao pode dar ruim
+def is_number_with_more_dots_and_decimal(string):
+    # works fine with '1.234.567.89'
+    if re.fullmatch(r'.*\.\d{2}', string) is not None:
+        dots_number = string.count('.')
+        number = float(string.replace('.', '', dots_number - 1))
+        return (True, number)
+    else:
         return (False, math.nan)
 
 
@@ -188,7 +213,6 @@ def after_target_set_number_value_searcher(candidate_sentences, target_set):
                 if possible_result:
                     # FIXME: isso pode quebrar se for o último
                     results.append({'number': number, 'possibleSize': sentence[position + 1]})
-
 
             position += 1
 
