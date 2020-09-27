@@ -239,14 +239,6 @@ def clean_search_result(dirty_result):
     return clean_result
 
 
-def ner(tokens):
-    # for token in tokens_without_stopwords:
-    #     tagged = nltk.pos_tag(token)
-    #     named_ent = nltk.ne_chunk(tagged, binary=False)
-    #     print(named_ent)
-    pass
-
-
 def sentence_viewer(sentences):
     for sentence in sentences:
         print(" ".join(sentence))
