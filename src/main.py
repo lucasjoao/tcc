@@ -180,6 +180,17 @@ def is_number_with_more_dots_and_decimal(string):
         return (False, math.nan)
 
 
+def create_result_item(number, possible_size):
+    normalized_possible_size = possible_size
+    was_casted, _ = is_number(possible_size)
+
+    if was_casted:
+        # FIXME: undefined aqui ao inves de None resolve erros por causa da tipagem
+        normalized_possible_size = 'undefined'
+
+    return {'number': number, 'possible_size': normalized_possible_size}
+
+
 def monetary_value_searcher(candidate_sentences):
     invalid_positions = frozenset([0, 1])
     results = []
@@ -190,7 +201,7 @@ def monetary_value_searcher(candidate_sentences):
             if was_casted and position not in invalid_positions:
                 if sentence[position - 2] == 'r' and sentence[position - 1] == '$':
                     # FIXME: isso pode quebrar se for o último
-                    results.append({'number': number, 'possibleSize': sentence[position + 1]})
+                    results.append(create_result_item(number, sentence[position + 1]))
 
             position += 1
     return results
@@ -213,7 +224,7 @@ def after_target_set_number_value_searcher(candidate_sentences, target_set):
 
                 if possible_result:
                     # FIXME: isso pode quebrar se for o último
-                    results.append({'number': number, 'possibleSize': sentence[curr_position + 1]})
+                    results.append(create_result_item(number, sentence[curr_position + 1]))
 
             curr_position += 1
 
@@ -223,7 +234,7 @@ def after_target_set_number_value_searcher(candidate_sentences, target_set):
 def clean_search_result(dirty_result):
     clean_result = []
     for dict_result in dirty_result:
-        if not is_number(dict_result['possibleSize'])[0]:
+        if not is_number(dict_result['possible_size'])[0]:
             clean_result.append(dict_result)
     return clean_result
 
