@@ -200,21 +200,22 @@ def after_target_set_number_value_searcher(candidate_sentences, target_set):
     results = []
     target_set_size = len(target_set)
     for sentence in candidate_sentences:
-        position = 0
+        curr_position = 0
         for token in sentence:
             possible_result = True
             was_casted, number = is_number(token)
             if was_casted:
-                for i in range(1, target_set_size):
-                    if sentence[position - i] not in target_set:
+                for i in range(1, target_set_size + 1):
+                    # FIXME: pode quebrar se for o primeiro
+                    if sentence[curr_position - i] not in target_set:
                         possible_result = False
                         break
 
                 if possible_result:
                     # FIXME: isso pode quebrar se for o último
-                    results.append({'number': number, 'possibleSize': sentence[position + 1]})
+                    results.append({'number': number, 'possibleSize': sentence[curr_position + 1]})
 
-            position += 1
+            curr_position += 1
 
     return results
 
