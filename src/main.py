@@ -1,9 +1,8 @@
-import PyPDF2
 import nltk
 import math
 import re
 
-from src.plataform import data_dir_scan as dds
+from src.plataform import pdf_extract as pe
 from nltk.tokenize import word_tokenize, sent_tokenize
 from nltk.corpus import stopwords
 from nltk.stem import RSLPStemmer
@@ -16,15 +15,6 @@ nltk.download('maxent_ne_chunker')
 nltk.download('words')
 
 pt_br = 'portuguese'
-
-
-def extract_text(pdf_reader):
-    pdf_text = ''
-    for i in range(pdf_reader.numPages):
-        pdf_page = pdf_reader.getPage(i)
-        pdf_text += pdf_page.extractText()
-
-    return pdf_text
 
 
 def preprocess(pdf_text):
@@ -248,8 +238,7 @@ def sentence_viewer(sentences):
 def ll_and_pl_to_file(filename):
     print(filename)
     print(80 * '-')
-    pdf_reader = PyPDF2.PdfFileReader(dds.data_dir_scan.get_data_directory() + filename)
-    pdf_text = extract_text(pdf_reader)
+    pdf_text = pe.pdf_extract.get_text(filename)
     preprocessed_text = preprocess(pdf_text)
     stemming_text = stemming(preprocessed_text)
     ll_stemming_set = lucro_liquido_stemming()
