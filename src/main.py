@@ -2,6 +2,7 @@ import nltk
 import math
 import re
 
+from src.indicator import roe as roe
 from src.plataform import pdf_extract as pe
 from nltk.tokenize import word_tokenize, sent_tokenize
 from nltk.corpus import stopwords
@@ -306,6 +307,34 @@ def ll_and_pl_to_file(filename):
     print(pl_number_value_result)
     print(80 * '-')
 
+    roe_indicator = roe.roe()
+
+    # FIXME: não ser repetitivo
+    # FIXME: considerar escala
+    # FIXME: deveria entrar no pós?
+    print('Possível valor de ROE')
+    if len(ll_monetary_dirty_result):
+        if len(pl_monetary_dirty_result):
+            for ll_dict in ll_monetary_dirty_result:
+                for pl_dict in pl_monetary_dirty_result:
+                    print(roe_indicator.calculate(ll_dict['number'], pl_dict['number']))
+
+        if len(pl_number_value_result):
+            for ll_dict in ll_monetary_dirty_result:
+                for pl_dict in pl_number_value_result:
+                    print(roe_indicator.calculate(ll_dict['number'], pl_dict['number']))
+
+    if len(ll_number_value_result):
+        if len(pl_monetary_dirty_result):
+            for ll_dict in ll_number_value_result:
+                for pl_dict in pl_monetary_dirty_result:
+                    print(roe_indicator.calculate(ll_dict['number'], pl_dict['number']))
+
+        if len(pl_number_value_result):
+            for ll_dict in ll_number_value_result:
+                for pl_dict in pl_number_value_result:
+                    print(roe_indicator.calculate(ll_dict['number'], pl_dict['number']))
+    print(80 * '-')
 
 ll_and_pl_to_file('weg_2010_2T.pdf')
 ll_and_pl_to_file('weg_2015_1T.pdf')
