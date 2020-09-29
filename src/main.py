@@ -284,18 +284,26 @@ def ll_and_pl_to_file(filename):
     ll_false_candidate_sentences = candidate_sentences(ll_candidate_sentences, recuperacao_stemming())
     ll_candidate_sentences = [sentence for sentence in ll_candidate_sentences if sentence not in ll_false_candidate_sentences]
 
-    ll_dirty_result = monetary_value_searcher(ll_candidate_sentences)
-    pl_dirty_result = monetary_value_searcher(pl_candidate_sentences)
+    ll_monetary_dirty_result = monetary_value_searcher(ll_candidate_sentences)
+    pl_monetary_dirty_result = monetary_value_searcher(pl_candidate_sentences)
 
-    print('Candidatos para lucro líquido antes da limpeza:')
-    print(ll_dirty_result)
-    print('Candidatos finais para lucro líquido:')
-    print(clean_search_result(ll_dirty_result))
+    print('Candidatos (R$) para lucro líquido antes da limpeza:')
+    print(ll_monetary_dirty_result)
+    print('Candidatos (R$) finais para lucro líquido:')
+    print(clean_search_result(ll_monetary_dirty_result))
     print(80 * '-')
-    print('Candidatos para patrimônio líquido antes da limpeza:')
-    print(pl_dirty_result)
-    print('Candidatos finais para patrimônio líquido:')
-    print(clean_search_result(pl_dirty_result))
+    print('Candidatos (R$) para patrimônio líquido antes da limpeza:')
+    print(pl_monetary_dirty_result)
+    print('Candidatos (R$) finais para patrimônio líquido:')
+    print(clean_search_result(pl_monetary_dirty_result))
+    print(80 * '-')
+
+    print('Candidatos (numéricos) lucro líquido:')
+    ll_number_value_result = after_target_set_number_value_searcher(ll_candidate_sentences, ll_stemming_set)
+    print(ll_number_value_result)
+    print('Candidatos (numéricos) patrimônio líquido:')
+    pl_number_value_result = after_target_set_number_value_searcher(pl_candidate_sentences, pl_stemming_set)
+    print(pl_number_value_result)
     print(80 * '-')
 
 
