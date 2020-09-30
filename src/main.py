@@ -4,34 +4,10 @@ import re
 
 from src.indicator import roe as roe
 from src.plataform import pdf_extract as pe
-from nltk.tokenize import word_tokenize, sent_tokenize
-from nltk.corpus import stopwords
+from src.plataform import preprocessor as pp
 from nltk.stem import RSLPStemmer
 
-nltk.download('punkt')
-nltk.download('stopwords')
 nltk.download('rslp')
-nltk.download('averaged_perceptron_tagger')
-nltk.download('maxent_ne_chunker')
-nltk.download('words')
-
-pt_br = 'portuguese'
-
-
-def preprocess(pdf_text):
-    text_sentences = sent_tokenize(pdf_text, pt_br)
-    text_sentences_in_tokens = [word_tokenize(sentence) for sentence in text_sentences]
-
-    preprocess_result = []
-    for sentence in text_sentences_in_tokens:
-        sentence_result = []
-        for token in sentence:
-            if token not in stopwords.words(pt_br):
-                sentence_result.append(token)
-
-        preprocess_result.append(sentence_result)
-
-    return preprocess_result
 
 
 def stemming(sentences_tokens):
@@ -236,11 +212,15 @@ def sentence_viewer(sentences):
         print("\n")
 
 
+# FIXME: organizer final vai arrumar isso
+preprocessor = pp.preprocessor()
+
+
 def ll_and_pl_to_file(filename):
     print(filename)
     print(80 * '-')
     pdf_text = pe.pdf_extract.get_text(filename)
-    preprocessed_text = preprocess(pdf_text)
+    preprocessed_text = preprocessor.execute(pdf_text)
     stemming_text = stemming(preprocessed_text)
     ll_stemming_set = lucro_liquido_stemming()
     pl_stemming_set = patrimonio_liquido_stemming()
@@ -335,6 +315,7 @@ def ll_and_pl_to_file(filename):
                 for pl_dict in pl_number_value_result:
                     print(roe_indicator.calculate(ll_dict['number'], pl_dict['number']))
     print(80 * '-')
+
 
 ll_and_pl_to_file('weg_2010_2T.pdf')
 ll_and_pl_to_file('weg_2015_1T.pdf')
