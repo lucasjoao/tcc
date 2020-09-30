@@ -10,6 +10,7 @@ from nltk.stem import RSLPStemmer
 nltk.download('rslp')
 
 
+# TODO: ao refatorar, criar um get stemmer para instanciar esse troço só uma vez
 def stemming(sentences_tokens):
     stemmer = RSLPStemmer()
 
@@ -26,74 +27,75 @@ def stemming(sentences_tokens):
 
 def lucro_liquido_stemming():
     stemmer = RSLPStemmer()
-    return frozenset([stemmer.stem('lucro'), stemmer.stem('líquido')])
+    return [frozenset([stemmer.stem('lucro'), stemmer.stem('líquido')])]
 
 
 def patrimonio_liquido_stemming():
     stemmer = RSLPStemmer()
-    return frozenset([stemmer.stem('patrimônio'), stemmer.stem('líquido')])
+    return [frozenset([stemmer.stem('patrimônio'), stemmer.stem('líquido')])]
 
 
 def ir_stemming():
     stemmer = RSLPStemmer()
-    return frozenset([stemmer.stem('imposto'), stemmer.stem('renda')])
+    return [frozenset([stemmer.stem('imposto'), stemmer.stem('renda')])]
 
 
 def receita_operacional_liquida_stemming():
     stemmer = RSLPStemmer()
-    return frozenset([stemmer.stem('receita'), stemmer.stem('operacional'), stemmer.stem('líquida')])
+    return [frozenset([stemmer.stem('receita'), stemmer.stem('operacional'), stemmer.stem('líquida')])]
 
 
 def ticket_stemming():
     stemmer = RSLPStemmer()
-    return frozenset([stemmer.stem('wege3')])
+    return [frozenset([stemmer.stem('wege3')])]
 
 
 def ativos_fixos_stemming():
     stemmer = RSLPStemmer()
-    return frozenset([stemmer.stem('ativos'), stemmer.stem('fixos')])
+    return [frozenset([stemmer.stem('ativos'), stemmer.stem('fixos')])]
 
 
 def investimentos_stemming():
     stemmer = RSLPStemmer()
-    return frozenset([stemmer.stem('investimentos')])
+    return [frozenset([stemmer.stem('investimentos')])]
 
 
 def variacao_stemming():
     stemmer = RSLPStemmer()
-    return frozenset([stemmer.stem('variação')])
+    return [frozenset([stemmer.stem('variação')])]
 
 
 def dividendos_stemming():
     stemmer = RSLPStemmer()
-    return frozenset([stemmer.stem('dividendos')])
+    return [frozenset([stemmer.stem('dividendos')])]
 
 
 def divida_stemming():
     stemmer = RSLPStemmer()
-    return frozenset([stemmer.stem('dívida')])
+    return [frozenset([stemmer.stem('dívida')])]
 
 
 def imposto_stemming():
     stemmer = RSLPStemmer()
-    return frozenset([stemmer.stem('imposto')])
+    return [frozenset([stemmer.stem('imposto')])]
 
 
 def ebitda_stemming():
     stemmer = RSLPStemmer()
-    return frozenset([stemmer.stem('ebitda')])
+    return [frozenset([stemmer.stem('ebitda')])]
 
 
 def recuperacao_stemming():
     stemmer = RSLPStemmer()
-    return frozenset([stemmer.stem('recuperação')])
+    return [frozenset([stemmer.stem('recuperação')])]
 
 
-def candidate_sentences(text, searcher_set):
+def candidate_sentences(text, target_sets):
     candidates = []
     for sentence in text:
-        if searcher_set < frozenset(sentence):
-            candidates.append(sentence)
+        for target_set in target_sets:
+            if target_set < frozenset(sentence):
+                candidates.append(sentence)
     return candidates
 
 
@@ -229,8 +231,9 @@ def ll_and_pl_to_file(filename):
     pl_candidate_sentences = candidate_sentences(stemming_text, pl_stemming_set)
 
     # filtering
-    ll_candidate_sentences = is_searcher_words_in_sequence(ll_candidate_sentences, ll_stemming_set)
-    pl_candidate_sentences = is_searcher_words_in_sequence(pl_candidate_sentences, pl_stemming_set)
+    # FIXME: arrumar ao refatorar
+    ll_candidate_sentences = is_searcher_words_in_sequence(ll_candidate_sentences, ll_stemming_set[0])
+    pl_candidate_sentences = is_searcher_words_in_sequence(pl_candidate_sentences, pl_stemming_set[0])
 
     ll_false_candidate_sentences = candidate_sentences(ll_candidate_sentences, ir_stemming())
     ll_candidate_sentences = [sentence for sentence in ll_candidate_sentences if sentence not in ll_false_candidate_sentences]
@@ -280,10 +283,11 @@ def ll_and_pl_to_file(filename):
     print(80 * '-')
 
     print('Candidatos (numéricos) lucro líquido:')
-    ll_number_value_result = after_target_set_number_value_searcher(ll_candidate_sentences, ll_stemming_set)
+    # FIXME: arrumar ao refatorar
+    ll_number_value_result = after_target_set_number_value_searcher(ll_candidate_sentences, ll_stemming_set[0])
     print(ll_number_value_result)
     print('Candidatos (numéricos) patrimônio líquido:')
-    pl_number_value_result = after_target_set_number_value_searcher(pl_candidate_sentences, pl_stemming_set)
+    pl_number_value_result = after_target_set_number_value_searcher(pl_candidate_sentences, pl_stemming_set[0])
     print(pl_number_value_result)
     print(80 * '-')
 
@@ -314,6 +318,11 @@ def ll_and_pl_to_file(filename):
             for ll_dict in ll_number_value_result:
                 for pl_dict in pl_number_value_result:
                     print(roe_indicator.calculate(ll_dict['number'], pl_dict['number']))
+    print(80 * '-')
+
+    print('Candidato para ROE através de busca')
+    # FIXME: fazer busca monetária e de valor ao refatorar
+    print(candidate_sentences(stemming_text, roe_indicator.get_target_sets()))
     print(80 * '-')
 
 
