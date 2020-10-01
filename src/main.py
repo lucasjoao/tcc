@@ -1,6 +1,8 @@
 import nltk
 
 from src.indicator import roe as roe
+from src.indicator import lucro_liquido as ll
+from src.indicator import patrimonio_liquido as pl
 from src.plataform import pdf_extract as pe
 from src.plataform import preprocessor as pp
 from src.helper import number_helper as nh
@@ -23,16 +25,6 @@ def stemming(sentences_tokens):
         stemming_result.append(sentence_result)
 
     return stemming_result
-
-
-def lucro_liquido_stemming():
-    stemmer = RSLPStemmer()
-    return [frozenset([stemmer.stem('lucro'), stemmer.stem('líquido')])]
-
-
-def patrimonio_liquido_stemming():
-    stemmer = RSLPStemmer()
-    return [frozenset([stemmer.stem('patrimônio'), stemmer.stem('líquido')])]
 
 
 def ir_stemming():
@@ -178,6 +170,8 @@ def clean_search_result(dirty_result):
 
 # FIXME: organizer final vai arrumar isso
 preprocessor = pp.preprocessor()
+lucro_liquido = ll.lucro_liquido()
+patrimonio_liquido = pl.patrimonio_liquido()
 
 
 def ll_and_pl_to_file(filename):
@@ -186,8 +180,8 @@ def ll_and_pl_to_file(filename):
     pdf_text = pe.pdf_extract.get_text(filename)
     preprocessed_text = preprocessor.execute(pdf_text)
     stemming_text = stemming(preprocessed_text)
-    ll_stemming_set = lucro_liquido_stemming()
-    pl_stemming_set = patrimonio_liquido_stemming()
+    ll_stemming_set = lucro_liquido.get_target_sets()
+    pl_stemming_set = patrimonio_liquido.get_target_sets()
 
     ll_candidate_sentences = candidate_sentences(stemming_text, ll_stemming_set)
     pl_candidate_sentences = candidate_sentences(stemming_text, pl_stemming_set)
@@ -298,3 +292,9 @@ ll_and_pl_to_file('engie_2019_2T.pdf')
 ll_and_pl_to_file('engie_2020_2T.pdf')
 ll_and_pl_to_file('fleury_2019_3T.pdf')
 ll_and_pl_to_file('fleury_2020_2T.pdf')
+
+# TODO: final
+# vai ter uma classe Manager que é instanciada no main
+# init do manager faz todos os downloads
+# add reports no manager
+# mando manager executar para o roe
