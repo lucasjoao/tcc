@@ -1,5 +1,3 @@
-import nltk
-
 from src.indicator import roe as roe
 from src.indicator import lucro_liquido as ll
 from src.indicator import patrimonio_liquido as pl
@@ -8,64 +6,6 @@ from src.plataform import preprocessor as pp
 from src.helper import number_helper as nh
 from src.helper import print_helper as ph
 from src.technique import stemming as s
-from nltk.stem import RSLPStemmer
-
-nltk.download('rslp')
-
-
-def ir_stemming():
-    stemmer = RSLPStemmer()
-    return [frozenset([stemmer.stem('imposto'), stemmer.stem('renda')])]
-
-
-def receita_operacional_liquida_stemming():
-    stemmer = RSLPStemmer()
-    return [frozenset([stemmer.stem('receita'), stemmer.stem('operacional'), stemmer.stem('líquida')])]
-
-
-def ticket_stemming():
-    stemmer = RSLPStemmer()
-    return [frozenset([stemmer.stem('wege3')])]
-
-
-def ativos_fixos_stemming():
-    stemmer = RSLPStemmer()
-    return [frozenset([stemmer.stem('ativos'), stemmer.stem('fixos')])]
-
-
-def investimentos_stemming():
-    stemmer = RSLPStemmer()
-    return [frozenset([stemmer.stem('investimentos')])]
-
-
-def variacao_stemming():
-    stemmer = RSLPStemmer()
-    return [frozenset([stemmer.stem('variação')])]
-
-
-def dividendos_stemming():
-    stemmer = RSLPStemmer()
-    return [frozenset([stemmer.stem('dividendos')])]
-
-
-def divida_stemming():
-    stemmer = RSLPStemmer()
-    return [frozenset([stemmer.stem('dívida')])]
-
-
-def imposto_stemming():
-    stemmer = RSLPStemmer()
-    return [frozenset([stemmer.stem('imposto')])]
-
-
-def ebitda_stemming():
-    stemmer = RSLPStemmer()
-    return [frozenset([stemmer.stem('ebitda')])]
-
-
-def recuperacao_stemming():
-    stemmer = RSLPStemmer()
-    return [frozenset([stemmer.stem('recuperação')])]
 
 
 def candidate_sentences(text, target_sets):
@@ -178,37 +118,7 @@ def ll_and_pl_to_file(filename):
     ll_candidate_sentences = is_searcher_words_in_sequence(ll_candidate_sentences, ll_stemming_set[0])
     pl_candidate_sentences = is_searcher_words_in_sequence(pl_candidate_sentences, pl_stemming_set[0])
 
-    ll_false_candidate_sentences = candidate_sentences(ll_candidate_sentences, ir_stemming())
-    ll_candidate_sentences = [sentence for sentence in ll_candidate_sentences if sentence not in ll_false_candidate_sentences]
-
-    ll_false_candidate_sentences = candidate_sentences(ll_candidate_sentences, receita_operacional_liquida_stemming())
-    ll_candidate_sentences = [sentence for sentence in ll_candidate_sentences if sentence not in ll_false_candidate_sentences]
-
-    ll_false_candidate_sentences = candidate_sentences(ll_candidate_sentences, ticket_stemming())
-    ll_candidate_sentences = [sentence for sentence in ll_candidate_sentences if sentence not in ll_false_candidate_sentences]
-
-    ll_false_candidate_sentences = candidate_sentences(ll_candidate_sentences, ativos_fixos_stemming())
-    ll_candidate_sentences = [sentence for sentence in ll_candidate_sentences if sentence not in ll_false_candidate_sentences]
-
-    ll_false_candidate_sentences = candidate_sentences(ll_candidate_sentences, investimentos_stemming())
-    ll_candidate_sentences = [sentence for sentence in ll_candidate_sentences if sentence not in ll_false_candidate_sentences]
-
-    ll_false_candidate_sentences = candidate_sentences(ll_candidate_sentences, variacao_stemming())
-    ll_candidate_sentences = [sentence for sentence in ll_candidate_sentences if sentence not in ll_false_candidate_sentences]
-
-    ll_false_candidate_sentences = candidate_sentences(ll_candidate_sentences, dividendos_stemming())
-    ll_candidate_sentences = [sentence for sentence in ll_candidate_sentences if sentence not in ll_false_candidate_sentences]
-
-    ll_false_candidate_sentences = candidate_sentences(ll_candidate_sentences, divida_stemming())
-    ll_candidate_sentences = [sentence for sentence in ll_candidate_sentences if sentence not in ll_false_candidate_sentences]
-
-    ll_false_candidate_sentences = candidate_sentences(ll_candidate_sentences, imposto_stemming())
-    ll_candidate_sentences = [sentence for sentence in ll_candidate_sentences if sentence not in ll_false_candidate_sentences]
-
-    ll_false_candidate_sentences = candidate_sentences(ll_candidate_sentences, ebitda_stemming())
-    ll_candidate_sentences = [sentence for sentence in ll_candidate_sentences if sentence not in ll_false_candidate_sentences]
-
-    ll_false_candidate_sentences = candidate_sentences(ll_candidate_sentences, recuperacao_stemming())
+    ll_false_candidate_sentences = candidate_sentences(ll_candidate_sentences, lucro_liquido.get_filter_sets())
     ll_candidate_sentences = [sentence for sentence in ll_candidate_sentences if sentence not in ll_false_candidate_sentences]
 
     ll_monetary_dirty_result = monetary_value_searcher(ll_candidate_sentences)
