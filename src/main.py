@@ -1,10 +1,10 @@
 import nltk
-import math
-import re
 
 from src.indicator import roe as roe
 from src.plataform import pdf_extract as pe
 from src.plataform import preprocessor as pp
+from src.helper import number_helper as nh
+from src.helper import print_helper as ph
 from nltk.stem import RSLPStemmer
 
 nltk.download('rslp')
@@ -117,41 +117,9 @@ def is_searcher_words_in_sequence(candidates, searcher_set):
     return candidates_filtered
 
 
-def is_number(string):
-    if string.count('.') <= 1:
-        try:
-            # works fine with '1234', '1234.12' and '1234.0'
-            number = float(string.replace(',', '.'))
-            return (True, number)
-        except ValueError:
-            return (False, math.nan)
-    else:
-        return is_number_with_more_dots(string)
-
-
-def is_number_with_more_dots(string):
-    try:
-        # works fine with '1.234.567'
-        number = float(string.replace('.', ''))
-        return (True, number)
-    except ValueError:
-        return is_number_with_more_dots_and_decimal(string)
-
-
-# FIXME: se isso daqui jogar exception no float, entao pode dar ruim
-def is_number_with_more_dots_and_decimal(string):
-    # works fine with '1.234.567.89'
-    if re.fullmatch(r'.*\.\d{2}', string) is not None:
-        dots_number = string.count('.')
-        number = float(string.replace('.', '', dots_number - 1))
-        return (True, number)
-    else:
-        return (False, math.nan)
-
-
 def create_result_item(number, possible_size):
     normalized_possible_size = possible_size
-    was_casted, _ = is_number(possible_size)
+    was_casted, _ = nh.number_helper.is_number(possible_size)
 
     if was_casted:
         # FIXME: undefined aqui ao inves de None resolve erros por causa da tipagem
@@ -166,7 +134,7 @@ def monetary_value_searcher(candidate_sentences):
     for sentence in candidate_sentences:
         position = 0
         for token in sentence:
-            was_casted, number = is_number(token)
+            was_casted, number = nh.number_helper.is_number(token)
             if was_casted and position not in invalid_positions:
                 if sentence[position - 2] == 'r' and sentence[position - 1] == '$':
                     # FIXME: isso pode quebrar se for o último
@@ -183,7 +151,7 @@ def after_target_set_number_value_searcher(candidate_sentences, target_set):
         curr_position = 0
         for token in sentence:
             possible_result = True
-            was_casted, number = is_number(token)
+            was_casted, number = nh.number_helper.is_number(token)
             if was_casted:
                 for i in range(1, target_set_size + 1):
                     # FIXME: pode quebrar se for o primeiro
@@ -203,15 +171,9 @@ def after_target_set_number_value_searcher(candidate_sentences, target_set):
 def clean_search_result(dirty_result):
     clean_result = []
     for dict_result in dirty_result:
-        if not is_number(dict_result['possible_size'])[0]:
+        if not nh.number_helper.is_number(dict_result['possible_size'])[0]:
             clean_result.append(dict_result)
     return clean_result
-
-
-def sentence_viewer(sentences):
-    for sentence in sentences:
-        print(" ".join(sentence))
-        print("\n")
 
 
 # FIXME: organizer final vai arrumar isso
@@ -220,7 +182,7 @@ preprocessor = pp.preprocessor()
 
 def ll_and_pl_to_file(filename):
     print(filename)
-    print(80 * '-')
+    ph.print_helper.print_line()
     pdf_text = pe.pdf_extract.get_text(filename)
     preprocessed_text = preprocessor.execute(pdf_text)
     stemming_text = stemming(preprocessed_text)
@@ -275,12 +237,12 @@ def ll_and_pl_to_file(filename):
     print(ll_monetary_dirty_result)
     print('Candidatos (R$) finais para lucro líquido:')
     print(clean_search_result(ll_monetary_dirty_result))
-    print(80 * '-')
+    ph.print_helper.print_line()
     print('Candidatos (R$) para patrimônio líquido antes da limpeza:')
     print(pl_monetary_dirty_result)
     print('Candidatos (R$) finais para patrimônio líquido:')
     print(clean_search_result(pl_monetary_dirty_result))
-    print(80 * '-')
+    ph.print_helper.print_line()
 
     print('Candidatos (numéricos) lucro líquido:')
     # FIXME: arrumar ao refatorar
@@ -289,7 +251,7 @@ def ll_and_pl_to_file(filename):
     print('Candidatos (numéricos) patrimônio líquido:')
     pl_number_value_result = after_target_set_number_value_searcher(pl_candidate_sentences, pl_stemming_set[0])
     print(pl_number_value_result)
-    print(80 * '-')
+    ph.print_helper.print_line()
 
     roe_indicator = roe.roe()
 
@@ -318,12 +280,12 @@ def ll_and_pl_to_file(filename):
             for ll_dict in ll_number_value_result:
                 for pl_dict in pl_number_value_result:
                     print(roe_indicator.calculate(ll_dict['number'], pl_dict['number']))
-    print(80 * '-')
+    ph.print_helper.print_line()
 
     print('Candidato para ROE através de busca')
     # FIXME: fazer busca monetária e de valor ao refatorar
     print(candidate_sentences(stemming_text, roe_indicator.get_target_sets()))
-    print(80 * '-')
+    ph.print_helper.print_line()
 
 
 ll_and_pl_to_file('weg_2010_2T.pdf')
