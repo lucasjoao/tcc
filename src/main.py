@@ -7,24 +7,10 @@ from src.plataform import pdf_extract as pe
 from src.plataform import preprocessor as pp
 from src.helper import number_helper as nh
 from src.helper import print_helper as ph
+from src.technique import stemming as s
 from nltk.stem import RSLPStemmer
 
 nltk.download('rslp')
-
-
-# TODO: ao refatorar, criar um get stemmer para instanciar esse troço só uma vez
-def stemming(sentences_tokens):
-    stemmer = RSLPStemmer()
-
-    stemming_result = []
-    for sentence in sentences_tokens:
-        sentence_result = []
-        for token in sentence:
-            sentence_result.append(stemmer.stem(token))
-
-        stemming_result.append(sentence_result)
-
-    return stemming_result
 
 
 def ir_stemming():
@@ -172,6 +158,7 @@ def clean_search_result(dirty_result):
 preprocessor = pp.preprocessor()
 lucro_liquido = ll.lucro_liquido()
 patrimonio_liquido = pl.patrimonio_liquido()
+stemming = s.stemming()
 
 
 def ll_and_pl_to_file(filename):
@@ -179,7 +166,7 @@ def ll_and_pl_to_file(filename):
     ph.print_helper.print_line()
     pdf_text = pe.pdf_extract.get_text(filename)
     preprocessed_text = preprocessor.execute(pdf_text)
-    stemming_text = stemming(preprocessed_text)
+    stemming_text = stemming.stem_text_matrix(preprocessed_text)
     ll_stemming_set = lucro_liquido.get_target_sets()
     pl_stemming_set = patrimonio_liquido.get_target_sets()
 
