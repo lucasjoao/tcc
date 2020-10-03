@@ -4,60 +4,19 @@ from src.indicator import patrimonio_liquido as pl
 from src.plataform import pdf_extract as pe
 from src.plataform import preprocessor as pp
 from src.plataform import filters as f
-from src.helper import number_helper as nh
+from src.plataform import searcher as se
 from src.helper import print_helper as ph
 from src.helper import result_helper as rh
-from src.technique import stemming as s
-
-
-# TODO SEARCHER
-def monetary_value_searcher(candidate_sentences):
-    invalid_positions = frozenset([0, 1])
-    results = []
-    for sentence in candidate_sentences:
-        position = 0
-        for token in sentence:
-            was_casted, number = nh.number_helper.is_number(token)
-            if was_casted and position not in invalid_positions:
-                if sentence[position - 2] == 'r' and sentence[position - 1] == '$':
-                    # FIXME: isso pode quebrar se for o último
-                    results.append(rh.result_helper.create_result_item(number, sentence[position + 1]))
-
-            position += 1
-    return results
-
-
-# TODO SEARCHER
-def after_target_set_number_value_searcher(candidate_sentences, target_set):
-    results = []
-    target_set_size = len(target_set)
-    for sentence in candidate_sentences:
-        curr_position = 0
-        for token in sentence:
-            possible_result = True
-            was_casted, number = nh.number_helper.is_number(token)
-            if was_casted:
-                for i in range(1, target_set_size + 1):
-                    # FIXME: pode quebrar se for o primeiro
-                    if sentence[curr_position - i] not in target_set:
-                        possible_result = False
-                        break
-
-                if possible_result:
-                    # FIXME: isso pode quebrar se for o último
-                    results.append(rh.result_helper.create_result_item(number, sentence[curr_position + 1]))
-
-            curr_position += 1
-
-    return results
+from src.technique import stemming as st
 
 
 # FIXME: organizer final vai arrumar isso
 preprocessor = pp.preprocessor()
 lucro_liquido = ll.lucro_liquido()
 patrimonio_liquido = pl.patrimonio_liquido()
-stemming = s.stemming()
+stemming = st.stemming()
 filters = f.filters()
+searcher = se.searcher()
 
 
 def ll_and_pl_to_file(filename):
@@ -72,16 +31,14 @@ def ll_and_pl_to_file(filename):
     ll_candidate_sentences = filters.candidate_sentences(stemming_text, ll_stemming_set)
     pl_candidate_sentences = filters.candidate_sentences(stemming_text, pl_stemming_set)
 
-    # filtering
-    # FIXME: arrumar ao refatorar
     ll_candidate_sentences = filters.is_searcher_words_in_sequence(ll_candidate_sentences, ll_stemming_set)
     pl_candidate_sentences = filters.is_searcher_words_in_sequence(pl_candidate_sentences, pl_stemming_set)
 
     ll_false_candidate_sentences = filters.candidate_sentences(ll_candidate_sentences, lucro_liquido.get_filter_sets())
     ll_candidate_sentences = [sentence for sentence in ll_candidate_sentences if sentence not in ll_false_candidate_sentences]
 
-    ll_monetary_dirty_result = monetary_value_searcher(ll_candidate_sentences)
-    pl_monetary_dirty_result = monetary_value_searcher(pl_candidate_sentences)
+    ll_monetary_dirty_result = searcher.monetary_value(ll_candidate_sentences)
+    pl_monetary_dirty_result = searcher.monetary_value(pl_candidate_sentences)
 
     print('Candidatos (R$) para lucro líquido antes da limpeza:')
     print(ll_monetary_dirty_result)
@@ -95,11 +52,10 @@ def ll_and_pl_to_file(filename):
     ph.print_helper.print_line()
 
     print('Candidatos (numéricos) lucro líquido:')
-    # FIXME: arrumar ao refatorar
-    ll_number_value_result = after_target_set_number_value_searcher(ll_candidate_sentences, ll_stemming_set[0])
+    ll_number_value_result = searcher.after_target_set_number_value(ll_candidate_sentences, ll_stemming_set)
     print(ll_number_value_result)
     print('Candidatos (numéricos) patrimônio líquido:')
-    pl_number_value_result = after_target_set_number_value_searcher(pl_candidate_sentences, pl_stemming_set[0])
+    pl_number_value_result = searcher.after_target_set_number_value(pl_candidate_sentences, pl_stemming_set)
     print(pl_number_value_result)
     ph.print_helper.print_line()
 
