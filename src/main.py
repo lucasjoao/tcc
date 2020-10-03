@@ -5,9 +5,11 @@ from src.plataform import pdf_extract as pe
 from src.plataform import preprocessor as pp
 from src.helper import number_helper as nh
 from src.helper import print_helper as ph
+from src.helper import result_helper as rh
 from src.technique import stemming as s
 
 
+# TODO FILTER
 def candidate_sentences(text, target_sets):
     candidates = []
     for sentence in text:
@@ -17,6 +19,7 @@ def candidate_sentences(text, target_sets):
     return candidates
 
 
+# TODO FILTER
 def is_searcher_words_in_sequence(candidates, searcher_set):
     candidates_filtered = []
     for sentence in candidates:
@@ -35,17 +38,7 @@ def is_searcher_words_in_sequence(candidates, searcher_set):
     return candidates_filtered
 
 
-def create_result_item(number, possible_size):
-    normalized_possible_size = possible_size
-    was_casted, _ = nh.number_helper.is_number(possible_size)
-
-    if was_casted:
-        # FIXME: undefined aqui ao inves de None resolve erros por causa da tipagem
-        normalized_possible_size = 'undefined'
-
-    return {'number': number, 'possible_size': normalized_possible_size}
-
-
+# TODO SEARCHER
 def monetary_value_searcher(candidate_sentences):
     invalid_positions = frozenset([0, 1])
     results = []
@@ -56,12 +49,13 @@ def monetary_value_searcher(candidate_sentences):
             if was_casted and position not in invalid_positions:
                 if sentence[position - 2] == 'r' and sentence[position - 1] == '$':
                     # FIXME: isso pode quebrar se for o último
-                    results.append(create_result_item(number, sentence[position + 1]))
+                    results.append(rh.result_helper.create_result_item(number, sentence[position + 1]))
 
             position += 1
     return results
 
 
+# TODO SEARCHER
 def after_target_set_number_value_searcher(candidate_sentences, target_set):
     results = []
     target_set_size = len(target_set)
@@ -79,19 +73,11 @@ def after_target_set_number_value_searcher(candidate_sentences, target_set):
 
                 if possible_result:
                     # FIXME: isso pode quebrar se for o último
-                    results.append(create_result_item(number, sentence[curr_position + 1]))
+                    results.append(rh.result_helper.create_result_item(number, sentence[curr_position + 1]))
 
             curr_position += 1
 
     return results
-
-
-def clean_search_result(dirty_result):
-    clean_result = []
-    for dict_result in dirty_result:
-        if not nh.number_helper.is_number(dict_result['possible_size'])[0]:
-            clean_result.append(dict_result)
-    return clean_result
 
 
 # FIXME: organizer final vai arrumar isso
@@ -127,12 +113,12 @@ def ll_and_pl_to_file(filename):
     print('Candidatos (R$) para lucro líquido antes da limpeza:')
     print(ll_monetary_dirty_result)
     print('Candidatos (R$) finais para lucro líquido:')
-    print(clean_search_result(ll_monetary_dirty_result))
+    print(rh.result_helper.clean_search_result(ll_monetary_dirty_result))
     ph.print_helper.print_line()
     print('Candidatos (R$) para patrimônio líquido antes da limpeza:')
     print(pl_monetary_dirty_result)
     print('Candidatos (R$) finais para patrimônio líquido:')
-    print(clean_search_result(pl_monetary_dirty_result))
+    print(rh.result_helper.clean_search_result(pl_monetary_dirty_result))
     ph.print_helper.print_line()
 
     print('Candidatos (numéricos) lucro líquido:')
