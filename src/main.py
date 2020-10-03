@@ -3,39 +3,11 @@ from src.indicator import lucro_liquido as ll
 from src.indicator import patrimonio_liquido as pl
 from src.plataform import pdf_extract as pe
 from src.plataform import preprocessor as pp
+from src.plataform import filters as f
 from src.helper import number_helper as nh
 from src.helper import print_helper as ph
 from src.helper import result_helper as rh
 from src.technique import stemming as s
-
-
-# TODO FILTER
-def candidate_sentences(text, target_sets):
-    candidates = []
-    for sentence in text:
-        for target_set in target_sets:
-            if target_set < frozenset(sentence):
-                candidates.append(sentence)
-    return candidates
-
-
-# TODO FILTER
-def is_searcher_words_in_sequence(candidates, searcher_set):
-    candidates_filtered = []
-    for sentence in candidates:
-        first_searcher_element, *_ = searcher_set
-        searcher_set_size = len(searcher_set)
-        position = sentence.index(first_searcher_element)
-
-        hits = 0
-        for i in range(1, searcher_set_size):
-            if sentence[position + i] in searcher_set or sentence[position - i] in searcher_set:
-                hits += 1
-
-        if (searcher_set_size - 1) == hits:
-            candidates_filtered.append(sentence)
-
-    return candidates_filtered
 
 
 # TODO SEARCHER
@@ -85,6 +57,7 @@ preprocessor = pp.preprocessor()
 lucro_liquido = ll.lucro_liquido()
 patrimonio_liquido = pl.patrimonio_liquido()
 stemming = s.stemming()
+filters = f.filters()
 
 
 def ll_and_pl_to_file(filename):
@@ -96,15 +69,15 @@ def ll_and_pl_to_file(filename):
     ll_stemming_set = lucro_liquido.get_target_sets()
     pl_stemming_set = patrimonio_liquido.get_target_sets()
 
-    ll_candidate_sentences = candidate_sentences(stemming_text, ll_stemming_set)
-    pl_candidate_sentences = candidate_sentences(stemming_text, pl_stemming_set)
+    ll_candidate_sentences = filters.candidate_sentences(stemming_text, ll_stemming_set)
+    pl_candidate_sentences = filters.candidate_sentences(stemming_text, pl_stemming_set)
 
     # filtering
     # FIXME: arrumar ao refatorar
-    ll_candidate_sentences = is_searcher_words_in_sequence(ll_candidate_sentences, ll_stemming_set[0])
-    pl_candidate_sentences = is_searcher_words_in_sequence(pl_candidate_sentences, pl_stemming_set[0])
+    ll_candidate_sentences = filters.is_searcher_words_in_sequence(ll_candidate_sentences, ll_stemming_set)
+    pl_candidate_sentences = filters.is_searcher_words_in_sequence(pl_candidate_sentences, pl_stemming_set)
 
-    ll_false_candidate_sentences = candidate_sentences(ll_candidate_sentences, lucro_liquido.get_filter_sets())
+    ll_false_candidate_sentences = filters.candidate_sentences(ll_candidate_sentences, lucro_liquido.get_filter_sets())
     ll_candidate_sentences = [sentence for sentence in ll_candidate_sentences if sentence not in ll_false_candidate_sentences]
 
     ll_monetary_dirty_result = monetary_value_searcher(ll_candidate_sentences)
@@ -161,7 +134,7 @@ def ll_and_pl_to_file(filename):
 
     print('Candidato para ROE através de busca')
     # FIXME: fazer busca monetária e de valor ao refatorar
-    print(candidate_sentences(stemming_text, roe_indicator.get_target_sets()))
+    print(filters.candidate_sentences(stemming_text, roe_indicator.get_target_sets()))
     ph.print_helper.print_line()
 
 
