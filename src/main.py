@@ -59,33 +59,16 @@ def ll_and_pl_to_file(filename):
     print(pl_number_value_result)
     ph.print_helper.print_line()
 
-    roe_indicator = roe.roe()
-
-    # FIXME: não ser repetitivo
-    # FIXME: considerar escala
-    # FIXME: deveria entrar no pós?
     print('Possível valor de ROE')
-    if len(ll_monetary_dirty_result):
-        if len(pl_monetary_dirty_result):
-            for ll_dict in ll_monetary_dirty_result:
-                for pl_dict in pl_monetary_dirty_result:
-                    print(roe_indicator.calculate(ll_dict['number'], pl_dict['number']))
-
-        if len(pl_number_value_result):
-            for ll_dict in ll_monetary_dirty_result:
-                for pl_dict in pl_number_value_result:
-                    print(roe_indicator.calculate(ll_dict['number'], pl_dict['number']))
-
-    if len(ll_number_value_result):
-        if len(pl_monetary_dirty_result):
-            for ll_dict in ll_number_value_result:
-                for pl_dict in pl_monetary_dirty_result:
-                    print(roe_indicator.calculate(ll_dict['number'], pl_dict['number']))
-
-        if len(pl_number_value_result):
-            for ll_dict in ll_number_value_result:
-                for pl_dict in pl_number_value_result:
-                    print(roe_indicator.calculate(ll_dict['number'], pl_dict['number']))
+    roe_indicator = roe.roe()
+    possibles_roe = roe_indicator.calculate_iterating(ll_monetary_dirty_result, pl_monetary_dirty_result)
+    print(*possibles_roe)
+    possibles_roe = roe_indicator.calculate_iterating(ll_monetary_dirty_result, pl_number_value_result)
+    print(*possibles_roe)
+    possibles_roe = roe_indicator.calculate_iterating(ll_number_value_result, pl_monetary_dirty_result)
+    print(*possibles_roe)
+    possibles_roe = roe_indicator.calculate_iterating(ll_number_value_result, pl_number_value_result)
+    print(*possibles_roe)
     ph.print_helper.print_line()
 
     print('Candidato para ROE através de busca')

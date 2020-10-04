@@ -12,4 +12,12 @@ class roe:
                            self.stemmer.stem_word('patrimônio'), self.stemmer.stem_word('líquido')])]
 
     def calculate(self, lucro_liquido, patrimonio_liquido):
+        # FIXME: considerar escala na hora de calcular
         return (lucro_liquido / patrimonio_liquido) * 100
+
+    def calculate_iterating(self, lucro_liquido_result_list, patrimonio_liquido_result_list):
+        result = []
+        for lucro_liquido in lucro_liquido_result_list:
+            for patrimonio_liquido in patrimonio_liquido_result_list:
+                result.append(self.calculate(lucro_liquido['number'], patrimonio_liquido['number']))
+        return result
