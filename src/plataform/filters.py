@@ -14,13 +14,14 @@ class filters:
             for target_set in target_sets:
                 first_searcher_element, *_ = target_set
                 target_set_size = len(target_set)
-                position = sentence.index(first_searcher_element)
+                positions = [i for i, token in enumerate(sentence) if token == first_searcher_element]
 
-                hits = 1
-                for i in range(1, target_set_size):
-                    if sentence[position + i] in target_set or sentence[position - i] in target_set:
-                        hits += 1
+                for position in positions:
+                    hits = 1
+                    for i in range(1, target_set_size):
+                        if sentence[position + i] in target_set or sentence[position - i] in target_set:
+                            hits += 1
 
-                if target_set_size == hits:
-                    candidates_filtered.append(sentence)
+                    if target_set_size == hits:
+                        candidates_filtered.append(sentence)
         return candidates_filtered
