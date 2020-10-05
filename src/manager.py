@@ -44,14 +44,17 @@ class manager:
             result[filename] = candidate_sentences
         return result
 
-    def run_lucro_liquido_monetary(self):
-        reports_candidate_sentences = self.__common_process(self.lucro_liquido)
+    def __common_process_monetary(self, indicator):
+        reports_candidate_sentences = self.__common_process(indicator)
 
         result = {}
         for filename, candidate_sentences in reports_candidate_sentences.items():
             dirty_result = self.searcher.monetary_value(candidate_sentences)
             result[filename] = rh.result_helper.clean_search_result(dirty_result)
         return result
+
+    def run_lucro_liquido_monetary(self):
+        return self.__common_process_monetary(self.lucro_liquido)
 
     def run_lucro_liquido_number(self):
         reports_candidate_sentences = self.__common_process(self.lucro_liquido)
@@ -64,13 +67,7 @@ class manager:
         return result
 
     def run_patrimonio_liquido_monetary(self):
-        reports_candidate_sentences = self.__common_process(self.patrimonio_liquido)
-
-        result = {}
-        for filename, candidate_sentences in reports_candidate_sentences.items():
-            dirty_result = self.searcher.monetary_value(candidate_sentences)
-            result[filename] = rh.result_helper.clean_search_result(dirty_result)
-        return result
+        return self.__common_process_monetary(self.patrimonio_liquido)
 
 
 
