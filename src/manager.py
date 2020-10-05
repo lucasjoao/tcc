@@ -32,15 +32,14 @@ class manager:
             self.reports_stemming[report_filename] = stemming.stem_text_matrix(preprocessed_text)
 
     def __common_process(self, indicator):
-        target_set = indicator.get_target_sets()
-        print(target_set)
+        target_sets = indicator.get_target_sets()
 
         result = {}
         for filename, stem_text_matrix in self.reports_stemming.items():
-            candidate_sentences = self.filters.candidate_sentences(stem_text_matrix, target_set)
+            candidate_sentences = self.filters.candidate_sentences(stem_text_matrix, target_sets)
             false_candidate_sentences = self.filters.candidate_sentences(candidate_sentences, indicator.get_filter_sets())
             candidate_sentences = [sentence for sentence in candidate_sentences if sentence not in false_candidate_sentences]
-            candidate_sentences = self.filters.is_searcher_words_in_sequence(candidate_sentences, target_set)
+            candidate_sentences = self.filters.is_searcher_words_in_sequence(candidate_sentences, target_sets)
             result[filename] = candidate_sentences
         return result
 
@@ -54,8 +53,14 @@ class manager:
         return result
 
     def run_lucro_liquido_number(self):
-        pass
+        reports_candidate_sentences = self.__common_process(self.lucro_liquido)
 
+        target_sets = self.lucro_liquido.get_target_sets()
+
+        result = {}
+        for filename, candidate_sentences in reports_candidate_sentences.items():
+            result[filename] = self.searcher.after_target_set_number_value(candidate_sentences, target_sets)
+        return result
 
 
 
