@@ -40,5 +40,10 @@ class TestsManager(unittest.TestCase):
 
         self.assertEqual(len(result), 0, 'ROE (número após conjunto de busca): tamanho resultado')
 
+        roe_calculate = manager.run_calculate_roe()
+        result = roe_calculate[filename]
+
+        self.assertEqual(len(result), 0, 'ROE por cálculo: tamanho resultado')
+
 if __name__ == '__main__':
     unittest.main()

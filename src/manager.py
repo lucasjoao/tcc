@@ -83,6 +83,18 @@ class manager:
     def run_roe_number(self):
         return self.__common_process_number(self.roe)
 
+    def run_calculate_roe(self):
+        lucro_liquido_number = self.run_lucro_liquido_number()
+        lucro_liquido_monetary = self.run_lucro_liquido_monetary()
+        patrimonio_liquido_number = self.run_patrimonio_liquido_number()
+        patrimonio_liquido_monetary = self.run_patrimonio_liquido_monetary()
 
-
-
+        result = {}
+        for filename in self.reports_stemming.keys():
+            result_filename = []
+            result_filename += self.roe.calculate_iterating(lucro_liquido_number[filename], patrimonio_liquido_number[filename])
+            result_filename += self.roe.calculate_iterating(lucro_liquido_number[filename], patrimonio_liquido_monetary[filename])
+            result_filename += self.roe.calculate_iterating(lucro_liquido_monetary[filename], patrimonio_liquido_number[filename])
+            result_filename += self.roe.calculate_iterating(lucro_liquido_monetary[filename], patrimonio_liquido_number[filename])
+            result[filename] = result_filename
+        return result
