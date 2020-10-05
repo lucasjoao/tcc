@@ -20,5 +20,10 @@ class TestsManager(unittest.TestCase):
 
         self.assertEqual(len(result), 0, 'lucro líquido (número após conjunto de busca): tamanho resultado')
 
+        patrimonio_liquido_monetary = manager.run_patrimonio_liquido_monetary()
+        result = patrimonio_liquido_monetary[filename]
+
+        self.assertEqual(len(result), 0, 'patrimônio líquido (R$): tamanho resultado')
+
 if __name__ == '__main__':
     unittest.main()
