@@ -4,7 +4,7 @@ class filters:
         candidates = []
         for sentence in text:
             for target_set in target_sets:
-                if target_set < frozenset(sentence):
+                if target_set.issubset(frozenset(sentence)):
                     candidates.append(sentence)
         return candidates
 
