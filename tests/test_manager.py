@@ -45,5 +45,6 @@ class TestsManager(unittest.TestCase):
 
         self.assertEqual(len(result), 0, 'ROE por cálculo: tamanho resultado')
 
+
 if __name__ == '__main__':
     unittest.main()

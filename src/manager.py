@@ -91,10 +91,10 @@ class manager:
 
         result = {}
         for filename in self.reports_stemming.keys():
-            result_filename = []
-            result_filename += self.roe.calculate_iterating(lucro_liquido_number[filename], patrimonio_liquido_number[filename])
-            result_filename += self.roe.calculate_iterating(lucro_liquido_number[filename], patrimonio_liquido_monetary[filename])
-            result_filename += self.roe.calculate_iterating(lucro_liquido_monetary[filename], patrimonio_liquido_number[filename])
-            result_filename += self.roe.calculate_iterating(lucro_liquido_monetary[filename], patrimonio_liquido_number[filename])
-            result[filename] = result_filename
+            result_file = []
+            result_file += self.roe.calculate_iterating(lucro_liquido_number[filename], patrimonio_liquido_number[filename])
+            result_file += self.roe.calculate_iterating(lucro_liquido_number[filename], patrimonio_liquido_monetary[filename])
+            result_file += self.roe.calculate_iterating(lucro_liquido_monetary[filename], patrimonio_liquido_number[filename])
+            result_file += self.roe.calculate_iterating(lucro_liquido_monetary[filename], patrimonio_liquido_number[filename])
+            result[filename] = result_file
         return result
