@@ -30,5 +30,15 @@ class TestsManager(unittest.TestCase):
 
         self.assertEqual(len(result), 0, 'patrimônio líquido (número após conjunto de busca): tamanho resultado')
 
+        roe_monetary = manager.run_roe_monetary()
+        result = roe_monetary[filename]
+
+        self.assertEqual(len(result), 0, 'ROE (R$): tamanho resultado')
+
+        roe_number = manager.run_roe_number()
+        result = roe_number[filename]
+
+        self.assertEqual(len(result), 0, 'ROE (número após conjunto de busca): tamanho resultado')
+
 if __name__ == '__main__':
     unittest.main()

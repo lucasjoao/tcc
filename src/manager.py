@@ -23,6 +23,8 @@ class manager:
 
         self.lucro_liquido = ll.lucro_liquido()
         self.patrimonio_liquido = pl.patrimonio_liquido()
+        self.roe = roe.roe()
+
         self.filters = f.filters()
         self.searcher = se.searcher()
 
@@ -74,6 +76,12 @@ class manager:
 
     def run_patrimonio_liquido_number(self):
         return self.__common_process_number(self.patrimonio_liquido)
+
+    def run_roe_monetary(self):
+        return self.__common_process_monetary(self.roe)
+
+    def run_roe_number(self):
+        return self.__common_process_number(self.roe)
 
 
 
