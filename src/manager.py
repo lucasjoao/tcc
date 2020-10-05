@@ -22,6 +22,7 @@ class manager:
         stemming = st.stemming()
 
         self.lucro_liquido = ll.lucro_liquido()
+        self.patrimonio_liquido = pl.patrimonio_liquido()
         self.filters = f.filters()
         self.searcher = se.searcher()
 
@@ -60,6 +61,15 @@ class manager:
         result = {}
         for filename, candidate_sentences in reports_candidate_sentences.items():
             result[filename] = self.searcher.after_target_set_number_value(candidate_sentences, target_sets)
+        return result
+
+    def run_patrimonio_liquido_monetary(self):
+        reports_candidate_sentences = self.__common_process(self.patrimonio_liquido)
+
+        result = {}
+        for filename, candidate_sentences in reports_candidate_sentences.items():
+            dirty_result = self.searcher.monetary_value(candidate_sentences)
+            result[filename] = rh.result_helper.clean_search_result(dirty_result)
         return result
 
 
