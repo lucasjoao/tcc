@@ -1,6 +1,3 @@
-import nltk
-
-
 from nltk.tokenize import word_tokenize, sent_tokenize
 from nltk.corpus import stopwords
 
@@ -8,11 +5,6 @@ from nltk.corpus import stopwords
 class preprocessor:
 
     __pt_br = 'portuguese'
-
-    def __init__(self):
-        nltk.download('punkt')
-        nltk.download('stopwords')
-        nltk.download('words')
 
     def execute(self, text):
         text_sentences = sent_tokenize(text, self.__pt_br)

@@ -1,30 +1,13 @@
-from src.indicator import roe as roe
-from src.indicator import lucro_liquido as ll
-from src.indicator import patrimonio_liquido as pl
-from src.plataform import pdf_extract as pe
-from src.plataform import preprocessor as pp
-from src.plataform import filters as f
-from src.plataform import searcher as se
-from src.helper import print_helper as ph
-from src.helper import result_helper as rh
-from src.technique import stemming as st
+from src import manager as m
 
 
 # FIXME: organizer final vai arrumar isso
-preprocessor = pp.preprocessor()
-lucro_liquido = ll.lucro_liquido()
+
 patrimonio_liquido = pl.patrimonio_liquido()
-stemming = st.stemming()
-filters = f.filters()
-searcher = se.searcher()
+
 
 
 def ll_and_pl_to_file(filename):
-    print(filename)
-    ph.print_helper.print_line()
-    pdf_text = pe.pdf_extract.get_text(filename)
-    preprocessed_text = preprocessor.execute(pdf_text)
-    stemming_text = stemming.stem_text_matrix(preprocessed_text)
     ll_stemming_set = lucro_liquido.get_target_sets()
     pl_stemming_set = patrimonio_liquido.get_target_sets()
 
@@ -87,9 +70,3 @@ ll_and_pl_to_file('engie_2019_2T.pdf')
 ll_and_pl_to_file('engie_2020_2T.pdf')
 ll_and_pl_to_file('fleury_2019_3T.pdf')
 ll_and_pl_to_file('fleury_2020_2T.pdf')
-
-# TODO: final
-# vai ter uma classe Manager que é instanciada no main
-# init do manager faz todos os downloads
-# add reports no manager
-# mando manager executar para o roe

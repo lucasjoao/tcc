@@ -22,7 +22,7 @@ class TestsDataDirScan(unittest.TestCase):
     def test_get_files_name_size(self, mock_getcwd):
         mock_getcwd.return_value = '/home/tcc'
         files_name = dds.data_dir_scan.get_files_name()
-        self.assertEqual(len(files_name), 20)
+        self.assertEqual(len(files_name), 24)
         mock_getcwd.assert_called_once()
 
 
