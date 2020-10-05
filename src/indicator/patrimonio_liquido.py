@@ -8,3 +8,6 @@ class patrimonio_liquido:
 
     def get_target_sets(self):
         return [frozenset([self.stemmer.stem_word('patrimonio'), self.stemmer.stem_word('líquido')])]
+
+    def get_filter_sets(self):
+        pass
