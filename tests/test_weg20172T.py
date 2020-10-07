@@ -1,6 +1,5 @@
 import unittest
 from src import manager as m
-from data import data as data
 
 
 class TestsWeg20172T(unittest.TestCase):
