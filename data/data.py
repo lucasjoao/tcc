@@ -25,7 +25,7 @@ LUCRO_LIQUIDO = {
                  'weg_2010_2T.pdf': 116.1,
                  'weg_2015_1T.pdf': 245.9,
                  'weg20172T': 272.1,
-                 'weg20192T': 389
+                 'weg_2019_2T.pdf': 389.0
               }
 
 # em milhoes
