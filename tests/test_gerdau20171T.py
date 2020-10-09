@@ -29,7 +29,8 @@ class TestsGerdau20171T(unittest.TestCase):
         result = lucro_liquido_number[self.filename]
 
         self.assertEqual(len(result), 1, 'lucro líquido (número após conjunto de busca): tamanho resultado')
-        self.assertEqual(result[0]['number'], data.LUCRO_LIQUIDO[self.filename], 'lucro líquido (número após conjunto de busca): valor')
+        self.assertEqual(result[0]['number'], data.LUCRO_LIQUIDO[self.filename],
+                         'lucro líquido (número após conjunto de busca): valor')
 
     def test_patrimonio_liquido_monetary(self):
         patrimonio_liquido_monetary = self.manager.run_patrimonio_liquido_monetary()
