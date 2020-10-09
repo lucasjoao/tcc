@@ -20,5 +20,4 @@ class lucro_liquido:
                 frozenset([self.stemmer.stem_word('dividendos')]),
                 frozenset([self.stemmer.stem_word('dívida')]),
                 frozenset([self.stemmer.stem_word('imposto')]),
-                frozenset([self.stemmer.stem_word('ebitda')]),
                 frozenset([self.stemmer.stem_word('recuperação')])]
