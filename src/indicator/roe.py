@@ -12,7 +12,7 @@ class roe:
                            self.stemmer.stem_word('patrimônio'), self.stemmer.stem_word('líquido')])]
 
     def get_filter_sets(self):
-        pass
+        return [frozenset([])]
 
     def calculate(self, lucro_liquido, patrimonio_liquido):
         # FIXME: considerar escala na hora de calcular
