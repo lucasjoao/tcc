@@ -95,6 +95,7 @@ class manager:
             result_file += self.roe.calculate_iterating(lucro_liquido_number[filename], patrimonio_liquido_number[filename])
             result_file += self.roe.calculate_iterating(lucro_liquido_number[filename], patrimonio_liquido_monetary[filename])
             result_file += self.roe.calculate_iterating(lucro_liquido_monetary[filename], patrimonio_liquido_number[filename])
-            result_file += self.roe.calculate_iterating(lucro_liquido_monetary[filename], patrimonio_liquido_number[filename])
+            result_file += self.roe.calculate_iterating(lucro_liquido_monetary[filename],
+                                                        patrimonio_liquido_monetary[filename])
             result[filename] = result_file
         return result
