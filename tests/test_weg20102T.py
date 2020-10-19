@@ -41,7 +41,10 @@ class TestsWeg20102T(unittest.TestCase):
         patrimonio_liquido_number = self.manager.run_patrimonio_liquido_number()
         result = patrimonio_liquido_number[self.filename]
 
-        self.assertEqual(len(result), 0, 'patrimônio líquido (número após conjunto de busca): tamanho resultado')
+        self.assertEqual(len(result), 1, 'patrimônio líquido (número após conjunto de busca): tamanho resultado')
+        self.assertEqual(result[0]['number'],
+                         data.PATRIMONIO_LIQUIDO[self.filename],
+                         'patrimônio líquido (número após conjunto de busca): valor')
 
     def test_roe_monetary(self):
         roe_monetary = self.manager.run_roe_monetary()
@@ -59,7 +62,8 @@ class TestsWeg20102T(unittest.TestCase):
         roe_calculate = self.manager.run_calculate_roe()
         result = roe_calculate[self.filename]
 
-        self.assertEqual(len(result), 0, 'ROE por cálculo: tamanho resultado')
+        self.assertEqual(len(result), 1, 'ROE por cálculo: tamanho resultado')
+        self.assertEqual(result[0], data.ROE[self.filename], 'ROE por cálculo: valor')
 
 
 if __name__ == '__main__':
