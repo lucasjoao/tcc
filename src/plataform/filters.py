@@ -4,7 +4,8 @@ class filters:
         candidates = []
         for sentence in text:
             for target_set in target_sets:
-                if target_set.issubset(frozenset(sentence)):
+                empty_target_set = len(target_set) == 0
+                if not empty_target_set and target_set.issubset(frozenset(sentence)):
                     candidates.append(sentence)
         return candidates
 
