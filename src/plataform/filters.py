@@ -1,3 +1,6 @@
+from src.helper import list_helper as lh
+
+
 class filters:
 
     def candidate_sentences(self, text, target_sets):
@@ -25,4 +28,4 @@ class filters:
 
                     if target_set_size == hits:
                         candidates_filtered.append(sentence)
-        return candidates_filtered
+        return lh.list_helper.remove_duplicates(candidates_filtered)
