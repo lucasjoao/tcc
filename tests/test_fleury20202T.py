@@ -1,5 +1,6 @@
 import unittest
 from src import manager as m
+from src.helper import result_helper as rh
 from data import data as data
 
 
@@ -40,8 +41,11 @@ class TestsFleury20202T(unittest.TestCase):
     def test_patrimonio_liquido_number(self):
         patrimonio_liquido_number = self.manager.run_patrimonio_liquido_number()
         result = patrimonio_liquido_number[self.filename]
+        numbers_from_result = rh.result_helper.get_numbers_as_list(result)
 
-        self.assertEqual(len(result), 0, 'patrimônio líquido (número após conjunto de busca): tamanho resultado')
+        self.assertEqual(len(result), 2, 'patrimônio líquido (número após conjunto de busca): tamanho resultado')
+        self.assertIn(data.PATRIMONIO_LIQUIDO[self.filename], numbers_from_result,
+                      'patrimônio líquido (número após conjunto de busca): valor')
 
     def test_roe_monetary(self):
         roe_monetary = self.manager.run_roe_monetary()
@@ -59,7 +63,8 @@ class TestsFleury20202T(unittest.TestCase):
         roe_calculate = self.manager.run_calculate_roe()
         result = roe_calculate[self.filename]
 
-        self.assertEqual(len(result), 0, 'ROE por cálculo: tamanho resultado')
+        self.assertEqual(len(result), 2, 'ROE por cálculo: tamanho resultado')
+        self.assertIn(data.ROE[self.filename], result, 'ROE por cálculo: valor')
 
 
 if __name__ == '__main__':

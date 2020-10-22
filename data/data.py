@@ -1,6 +1,5 @@
 # NÃO ESTÁ COMPLETO E NEM GARANTO CERTEZA EM TODOS OS VALORES
 
-# em milhoes
 LUCRO_LIQUIDO = {
                  'ambev20191T': 2749,
                  'ambev20192T': 2615,
@@ -28,12 +27,12 @@ LUCRO_LIQUIDO = {
                  'weg_2019_2T.pdf': 389.0
               }
 
-# em milhoes
 PATRIMONIO_LIQUIDO = {
                       'ambev20191T': 60490,
                       'ambev20192T': 62928,
                       'ambev20193T': 67021,
                       'ambev20194T': 62556,
+                      'fleury_2020_2T.pdf': 1549453.0,
                       'gerdau20153T': 36012.3,
                       'gerdau20171T': 24663.4,
                       'gerdau20184T': 25938.5,
@@ -57,6 +56,7 @@ ROE = {
        'ambev20192T': 4.15,
        'ambev20193T': 3.88,
        'ambev20194T': 6.74,
+       'fleury_2020_2T.pdf': -0.004730701737968173,
        'gerdau20153T': -0.53,
        'gerdau20171T': 3.33,
        'gerdau20184T': 1.49,
