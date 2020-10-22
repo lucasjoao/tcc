@@ -35,6 +35,7 @@ class TestsGerdau20153T(unittest.TestCase):
 
         self.assertEqual(len(result), 0, 'patrimônio líquido (R$): tamanho resultado')
 
+    @unittest.skip('verificar comentário na planilha de searcher notes')
     def test_patrimonio_liquido_number(self):
         patrimonio_liquido_number = self.manager.run_patrimonio_liquido_number()
         result = patrimonio_liquido_number[self.filename]
