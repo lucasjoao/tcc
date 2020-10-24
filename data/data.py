@@ -6,7 +6,7 @@ LUCRO_LIQUIDO = {
                  'ambev20193T': 2604,
                  'ambev20194T': 4219,
                  'engie_2019_2T.pdf': 385.4,
-                 'engie20202T': 765.8,
+                 'engie_2020_2T.pdf': 765.8,
                  'fleury20193T': 94.8,
                  'fleury_2020_2T.pdf': -73.3,
                  'gerdau20153T': -193,
