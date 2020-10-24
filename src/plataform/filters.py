@@ -23,9 +23,13 @@ class filters:
                 for position in positions:
                     hits = 1
                     for i in range(1, target_set_size):
-                        if sentence[position + i] in target_set or sentence[position - i] in target_set:
+                        try:
+                            is_hit = sentence[position + i] in target_set or sentence[position - i] in target_set
+                        except IndexError:
+                            is_hit = False
+                        if is_hit:
                             hits += 1
 
                     if target_set_size == hits:
                         candidates_filtered.append(sentence)
-        return lh.list_helper.remove_duplicates(candidates_filtered)
+        return lh.list_helper.remove_duplicates_list_of_lists(candidates_filtered)

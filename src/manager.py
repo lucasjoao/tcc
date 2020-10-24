@@ -7,6 +7,7 @@ from src.plataform import preprocessor as pp
 from src.plataform import filters as f
 from src.plataform import searcher as se
 from src.helper import result_helper as rh
+from src.helper import list_helper as lh
 from src.technique import stemming as st
 
 
@@ -52,7 +53,8 @@ class manager:
         result = {}
         for filename, candidate_sentences in reports_candidate_sentences.items():
             dirty_result = self.searcher.monetary_value(candidate_sentences)
-            result[filename] = rh.result_helper.clean_search_result(dirty_result)
+            result_with_duplicate = rh.result_helper.clean_search_result(dirty_result)
+            result[filename] = lh.list_helper.remove_duplicates_list_of_dicts(result_with_duplicate)
         return result
 
     def __common_process_number(self, indicator):
@@ -62,7 +64,8 @@ class manager:
 
         result = {}
         for filename, candidate_sentences in reports_candidate_sentences.items():
-            result[filename] = self.searcher.after_target_set_number_value(candidate_sentences, target_sets)
+            result_with_duplicate = self.searcher.after_target_set_number_value(candidate_sentences, target_sets)
+            result[filename] = lh.list_helper.remove_duplicates_list_of_dicts(result_with_duplicate)
         return result
 
     def run_lucro_liquido_monetary(self):
