@@ -31,7 +31,7 @@ class manager:
 
         self.reports_stemming = {}
         for report_filename in reports_filename:
-            pdf_text = pe.pdf_extract.get_text(report_filename)
+            pdf_text = pe.pdf_extract.get_text_pytesseract(report_filename)
             preprocessed_text = preprocessor.execute(pdf_text)
             self.reports_stemming[report_filename] = stemming.stem_text_matrix(preprocessed_text)
 
