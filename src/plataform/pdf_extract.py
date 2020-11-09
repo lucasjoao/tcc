@@ -31,4 +31,3 @@ class pdf_extract:
             pdf_text = pdf_text + ' ' + pytesseract.image_to_string(page, lang='por')
 
         return pdf_text
-
