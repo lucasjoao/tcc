@@ -56,8 +56,8 @@ class TestsEngie20192T(unittest.TestCase):
 
         self.assertEqual(len(result), 0, 'patrimônio líquido (R$): tamanho resultado')
         self.assertEqual(result,
-                    self.manager_pytesseract.run_patrimonio_liquido_monetary()[self.filename],
-                    'ambas libs trazem o mesmo resultado')
+                         self.manager_pytesseract.run_patrimonio_liquido_monetary()[self.filename],
+                         'ambas libs trazem o mesmo resultado')
 
     def test_patrimonio_liquido_number(self):
         patrimonio_liquido_number = self.manager_pypdf2.run_patrimonio_liquido_number()
@@ -65,8 +65,8 @@ class TestsEngie20192T(unittest.TestCase):
 
         self.assertEqual(len(result), 0, 'patrimônio líquido (número após conjunto de busca): tamanho resultado')
         self.assertEqual(result,
-                    self.manager_pytesseract.run_patrimonio_liquido_number()[self.filename],
-                    'ambas libs trazem o mesmo resultado')
+                         self.manager_pytesseract.run_patrimonio_liquido_number()[self.filename],
+                         'ambas libs trazem o mesmo resultado')
 
     def test_roe_monetary(self):
         roe_monetary = self.manager_pypdf2.run_roe_monetary()
@@ -74,8 +74,8 @@ class TestsEngie20192T(unittest.TestCase):
 
         self.assertEqual(len(result), 0, 'ROE (R$): tamanho resultado')
         self.assertEqual(result,
-                    self.manager_pytesseract.run_roe_monetary()[self.filename],
-                    'ambas libs trazem o mesmo resultado')
+                         self.manager_pytesseract.run_roe_monetary()[self.filename],
+                         'ambas libs trazem o mesmo resultado')
 
     def test_roe_number(self):
         roe_number = self.manager_pypdf2.run_roe_number()
@@ -83,8 +83,8 @@ class TestsEngie20192T(unittest.TestCase):
 
         self.assertEqual(len(result), 0, 'ROE (número após conjunto de busca): tamanho resultado')
         self.assertEqual(result,
-            self.manager_pytesseract.run_roe_number()[self.filename],
-            'ambas libs trazem o mesmo resultado')
+                         self.manager_pytesseract.run_roe_number()[self.filename],
+                         'ambas libs trazem o mesmo resultado')
 
     def test_roe_calculate(self):
         roe_calculate = self.manager_pypdf2.run_calculate_roe()
@@ -92,8 +92,8 @@ class TestsEngie20192T(unittest.TestCase):
 
         self.assertEqual(len(result), 0, 'ROE por cálculo: tamanho resultado')
         self.assertEqual(result,
-            self.manager_pytesseract.run_calculate_roe()[self.filename],
-            'ambas libs trazem o mesmo resultado')
+                         self.manager_pytesseract.run_calculate_roe()[self.filename],
+                         'ambas libs trazem o mesmo resultado')
 
 
 if __name__ == '__main__':
