@@ -22,5 +22,5 @@ jobs:
         flake8 . --count --max-complexity=10 --max-line-length=127 --statistics
     - name: Run tests
       run: |
-        pip install nltk PyPDF2 numpy pytesseract
+        pip install nltk PyPDF2 numpy pytesseract pdf2image
         python -m unittest
