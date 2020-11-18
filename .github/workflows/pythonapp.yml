@@ -16,11 +16,15 @@ jobs:
     - name: Install pip
       run: |
         python -m pip install --upgrade pip
+    - name: Install dependencies (pip)
+      run: |
+        pip install flake8 nltk PyPDF2 numpy pytesseract pdf2image
+    - name: Install dependencies (ubuntu)
+      run: |
+        sudo apt-get install -y poppler-utils tesseract-ocr tesseract-ocr-por
     - name: Lint with flake8
       run: |
-        pip install flake8
         flake8 . --count --max-complexity=10 --max-line-length=127 --statistics
     - name: Run tests
       run: |
-        pip install nltk PyPDF2 numpy pytesseract pdf2image
         python -m unittest
