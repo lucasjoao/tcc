@@ -65,7 +65,7 @@ class TestsFleury20202T(unittest.TestCase):
                       'patrimônio líquido (número após conjunto de busca): valor (pypdf2)')
         self.assertEqual(len(result_pytesseract), 1,
                          'patrimônio líquido (número após conjunto de busca): tamanho resultado (pytesseract)')
-        self.assertIn(data.PATRIMONIO_LIQUIDO[self.filename], numbers_from_result_pytesseract,
+        self.assertNotIn(data.PATRIMONIO_LIQUIDO[self.filename], numbers_from_result_pytesseract,
                       'patrimônio líquido (número após conjunto de busca): valor (pytesseract)')
 
     def test_roe_monetary(self):
@@ -90,10 +90,11 @@ class TestsFleury20202T(unittest.TestCase):
         roe_calculate_pypdf2 = self.manager_pypdf2.run_calculate_roe()
         result_pypdf2 = roe_calculate_pypdf2[self.filename]
         roe_calculate_pytesseract = self.manager_pytesseract.run_calculate_roe()
+        result_pytesseract = roe_calculate_pytesseract[self.filename]
 
         self.assertEqual(len(result_pypdf2), 2, 'ROE por cálculo: tamanho resultado (pypdf2)')
         self.assertIn(data.ROE[self.filename], result_pypdf2, 'ROE por cálculo: valor (pypdf2)')
-        self.assertEqual(len(roe_calculate_pytesseract), 0, 'ROE por cálculo: tamanho resultado (pytesseract)')
+        self.assertEqual(len(result_pytesseract), 0, 'ROE por cálculo: tamanho resultado (pytesseract)')
 
 
 if __name__ == '__main__':
