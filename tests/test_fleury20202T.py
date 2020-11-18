@@ -59,10 +59,12 @@ class TestsFleury20202T(unittest.TestCase):
         numbers_from_result_pypdf2 = rh.result_helper.get_numbers_as_list(result_pypdf2)
         numbers_from_result_pytesseract = rh.result_helper.get_numbers_as_list(result_pytesseract)
 
-        self.assertEqual(len(result_pypdf2), 2, 'patrimônio líquido (número após conjunto de busca): tamanho resultado (pypdf2)')
+        self.assertEqual(len(result_pypdf2), 2,
+                         'patrimônio líquido (número após conjunto de busca): tamanho resultado (pypdf2)')
         self.assertIn(data.PATRIMONIO_LIQUIDO[self.filename], numbers_from_result_pypdf2,
                       'patrimônio líquido (número após conjunto de busca): valor (pypdf2)')
-        self.assertEqual(len(result_pytesseract), 1, 'patrimônio líquido (número após conjunto de busca): tamanho resultado (pytesseract)')
+        self.assertEqual(len(result_pytesseract), 1,
+                         'patrimônio líquido (número após conjunto de busca): tamanho resultado (pytesseract)')
         self.assertIn(data.PATRIMONIO_LIQUIDO[self.filename], numbers_from_result_pytesseract,
                       'patrimônio líquido (número após conjunto de busca): valor (pytesseract)')
 
