@@ -21,7 +21,7 @@ jobs:
         pip install flake8 nltk PyPDF2 numpy pytesseract pdf2image
     - name: Install dependencies (ubuntu)
       run: |
-        sudo apt-get install -y poppler-utils
+        sudo apt-get install -y poppler-utils tesseract-ocr
     - name: Lint with flake8
       run: |
         flake8 . --count --max-complexity=10 --max-line-length=127 --statistics
