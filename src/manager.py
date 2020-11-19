@@ -13,7 +13,7 @@ from src.technique import stemming as st
 
 class manager:
 
-    def __init__(self, reports_filename):
+    def __init__(self, reports_filename, text_extract_lib='pypdf2'):
         nltk.download('rslp')
         nltk.download('punkt')
         nltk.download('stopwords')
@@ -31,9 +31,17 @@ class manager:
 
         self.reports_stemming = {}
         for report_filename in reports_filename:
-            pdf_text = pe.pdf_extract.get_text(report_filename)
+            pdf_text = self.__get_pdf_text(report_filename, text_extract_lib)
             preprocessed_text = preprocessor.execute(pdf_text)
             self.reports_stemming[report_filename] = stemming.stem_text_matrix(preprocessed_text)
+
+    def __get_pdf_text(self, report_filename, text_extract_lib):
+        pdf_text = ''
+        if text_extract_lib == 'pypdf2':
+            pdf_text = pe.pdf_extract.get_text_pypdf2(report_filename)
+        elif text_extract_lib == 'pytesseract':
+            pdf_text = pe.pdf_extract.get_text_pytesseract(report_filename)
+        return pdf_text
 
     def __common_process(self, indicator):
         target_sets = indicator.get_target_sets()
