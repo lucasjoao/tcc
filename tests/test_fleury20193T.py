@@ -28,8 +28,8 @@ class TestsFleury20193T(unittest.TestCase):
 
         self.assertEqual(len(result), 0, 'lucro líquido (R$): tamanho resultado')
         self.assertEqual(result,
-                        self.manager_pytesseract.run_lucro_liquido_monetary()[self.filename],
-                        'ambas libs trazem o mesmo resultado')
+                         self.manager_pytesseract.run_lucro_liquido_monetary()[self.filename],
+                         'ambas libs trazem o mesmo resultado')
 
     def test_lucro_liquido_number(self):
         lucro_liquido_number_pypdf2 = self.manager_pypdf2.run_lucro_liquido_number()
@@ -39,8 +39,10 @@ class TestsFleury20193T(unittest.TestCase):
         numbers_from_result_pytesseract = rh.result_helper.get_numbers_as_list(result_pytesseract)
 
         self.assertEqual(len(result_pypdf2), 0, 'lucro líquido (número após conjunto de busca): tamanho resultado (pypdf2)')
-        self.assertEqual(len(result_pytesseract), 1, 'lucro líquido (número após conjunto de busca): tamanho resultado (pytesseract)')
-        self.assertIn(data.LUCRO_LIQUIDO[self.filename], numbers_from_result_pytesseract, 'lucro líquido (número após conjunto de busca): valor (pytesseract)')
+        self.assertEqual(len(result_pytesseract), 1,
+                         'lucro líquido (número após conjunto de busca): tamanho resultado (pytesseract)')
+        self.assertIn(data.LUCRO_LIQUIDO[self.filename], numbers_from_result_pytesseract,
+                      'lucro líquido (número após conjunto de busca): valor (pytesseract)')
 
     def test_patrimonio_liquido_monetary(self):
         patrimonio_liquido_monetary = self.manager_pypdf2.run_patrimonio_liquido_monetary()
@@ -84,8 +86,8 @@ class TestsFleury20193T(unittest.TestCase):
 
         self.assertEqual(len(result), 0, 'ROE por cálculo: tamanho resultado')
         self.assertEqual(result,
-                        self.manager_pytesseract.run_calculate_roe()[self.filename],
-                        'ambas libs trazem o mesmo resultado')
+                         self.manager_pytesseract.run_calculate_roe()[self.filename],
+                         'ambas libs trazem o mesmo resultado')
 
 
 if __name__ == '__main__':

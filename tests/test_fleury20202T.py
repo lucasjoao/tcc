@@ -66,7 +66,7 @@ class TestsFleury20202T(unittest.TestCase):
         self.assertEqual(len(result_pytesseract), 1,
                          'patrimônio líquido (número após conjunto de busca): tamanho resultado (pytesseract)')
         self.assertNotIn(data.PATRIMONIO_LIQUIDO[self.filename], numbers_from_result_pytesseract,
-                      'patrimônio líquido (número após conjunto de busca): valor (pytesseract)')
+                         'patrimônio líquido (número após conjunto de busca): valor (pytesseract)')
 
     def test_roe_monetary(self):
         roe_monetary = self.manager_pypdf2.run_roe_monetary()
