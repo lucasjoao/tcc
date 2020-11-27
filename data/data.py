@@ -34,7 +34,7 @@ PATRIMONIO_LIQUIDO = {
                       'ambev20194T': 62556,
                       'engie_2020_2T.pdf': 7434743,
                       'fleury_2020_2T.pdf': 1549453.0,
-                      'gerdau20153T': 36012.3,
+                      'gerdau_2015_3T.pdf': 36012381.0,
                       'gerdau_2017_1T.pdf': 24916345.0,
                       'gerdau20184T': 25938.5,
                       'gerdau20192T': 26568.4,
