@@ -33,7 +33,8 @@ class TestsWeg20151T(unittest.TestCase):
         self.assertEqual(len(result_pypdf2), 1, 'lucro líquido (R$): tamanho resultado (pypdf2)')
         self.assertIn(data.LUCRO_LIQUIDO[self.filename], numbers_from_result_pypdf2, 'lucro líquido (R$): valor (pypdf2)')
         self.assertEqual(len(result_pytesseract), 1, 'lucro líquido (R$): tamanho resultado (pytesseract)')
-        self.assertIn(data.LUCRO_LIQUIDO[self.filename], numbers_from_result_pytesseract, 'lucro líquido (R$): valor (pytesseract)')
+        self.assertIn(data.LUCRO_LIQUIDO[self.filename], numbers_from_result_pytesseract,
+                      'lucro líquido (R$): valor (pytesseract)')
 
     def test_lucro_liquido_number(self):
         lucro_liquido_number = self.manager_pypdf2.run_lucro_liquido_number()
@@ -65,7 +66,7 @@ class TestsWeg20151T(unittest.TestCase):
         self.assertEqual(len(result_pytesseract), 1,
                          'patrimônio líquido (número após conjunto de busca): tamanho resultado (pytesseract)')
         self.assertNotIn(data.PATRIMONIO_LIQUIDO[self.filename], numbers_from_result_pytesseract,
-                      'patrimônio líquido (número após conjunto de busca): valor (pytesseract)')
+                         'patrimônio líquido (número após conjunto de busca): valor (pytesseract)')
 
     def test_roe_monetary(self):
         roe_monetary = self.manager_pypdf2.run_roe_monetary()
