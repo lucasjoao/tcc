@@ -26,8 +26,10 @@ class pdf_extract:
     def get_text_pytesseract(filename):
         pages = convert_from_path(pdf_extract.__path_from_filename(filename), 500)
 
+        config_to_speed_up = '-c tessedit_do_invert=0'
+
         pdf_text = ''
         for page in pages:
-            pdf_text = pdf_text + ' ' + pytesseract.image_to_string(page, lang='por')
+            pdf_text = pdf_text + ' ' + pytesseract.image_to_string(page, lang='por', config=config_to_speed_up)
 
         return pdf_text
