@@ -49,7 +49,7 @@ PATRIMONIO_LIQUIDO = {
                       'weg_2010_2T.pdf': 2445405.0,
                       'weg_2015_1T.pdf': 5302661.0,
                       'weg_2017_2T.pdf': 6348046.0,
-                      'weg20192T': 8017
+                      'weg_2019_2T.pdf': 8017
                      }
 
 ROE = {
@@ -74,5 +74,5 @@ ROE = {
        'weg_2010_2T.pdf': 0.004747679832175038,  # diff from fundamentus.com.br
        'weg_2015_1T.pdf': 4.63,
        'weg_2017_2T.pdf': 0.0042879336413126174,
-       'weg20192T': 4.85
+       'weg_2019_2T.pdf': 4.85
        }
