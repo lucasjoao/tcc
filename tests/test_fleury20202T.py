@@ -57,7 +57,6 @@ class TestsFleury20202T(unittest.TestCase):
         result_pypdf2 = patrimonio_liquido_number_pypdf2[self.filename]
         result_pytesseract = patrimonio_liquido_number_pytesseract[self.filename]
         numbers_from_result_pypdf2 = rh.result_helper.get_numbers_as_list(result_pypdf2)
-        numbers_from_result_pytesseract = rh.result_helper.get_numbers_as_list(result_pytesseract)
 
         self.assertEqual(len(result_pypdf2), 2,
                          'patrimônio líquido (número após conjunto de busca): tamanho resultado (pypdf2)')
