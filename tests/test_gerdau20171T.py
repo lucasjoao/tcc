@@ -39,7 +39,7 @@ class TestsGerdau20171T(unittest.TestCase):
 
         self.assertEqual(len(result_pypdf2), 1, 'lucro líquido (número após conjunto de busca): tamanho resultado (pypdf2)')
         self.assertEqual(result_pypdf2[0]['number'], data.LUCRO_LIQUIDO[self.filename],
-                         'lucro líquido (número após conjunto de busca): valor (pypdf2')
+                         'lucro líquido (número após conjunto de busca): valor (pypdf2)')
         self.assertEqual(len(result_pytesseract), 0,
                          'lucro líquido (número após conjunto de busca): tamanho resultado (pytesseract)')
 
