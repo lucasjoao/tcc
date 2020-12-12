@@ -11,7 +11,7 @@ LUCRO_LIQUIDO = {
                  'fleury_2020_2T.pdf': -73.3,
                  'gerdau20153T': -193,
                  'gerdau_2017_1T.pdf': 824.0,
-                 'gerdau20184T': 389,
+                 'gerdau_2018_4T.pdf': 389.0,
                  'gerdau20192T': 372.7,
                  'inter20181T': 11.2,
                  'inter20192T': 45,
