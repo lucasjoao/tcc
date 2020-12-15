@@ -1,7 +1,7 @@
 # NÃO ESTÁ COMPLETO E NEM GARANTO CERTEZA EM TODOS OS VALORES
 
 LUCRO_LIQUIDO = {
-                 'ambev20191T': 2749,
+                 'ambev_2019_1T.pdf': 2762.0,
                  'ambev20192T': 2615,
                  'ambev20193T': 2604,
                  'ambev20194T': 4219,
@@ -12,7 +12,7 @@ LUCRO_LIQUIDO = {
                  'gerdau20153T': -193,
                  'gerdau_2017_1T.pdf': 824.0,
                  'gerdau_2018_4T.pdf': 389.0,
-                 'gerdau20192T': 372.7,
+                 'gerdau_2019_2T.pdf': 372.7,
                  'inter20181T': 11.2,
                  'inter20192T': 45,
                  'inter20193T': 11.8,
