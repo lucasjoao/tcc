@@ -18,16 +18,8 @@ class data_dir_scan:
         """
         data_directory = 'data/'
         current_directory = os.getcwd()
-        if 'src' in current_directory or 'tests' in current_directory:
+        if 'src' in current_directory:
             data_directory = '../data/'
+        if 'tests' in current_directory:
+            data_directory = '../../../data/'
         return data_directory
-
-    @staticmethod
-    def get_files_name():
-        """Retorna os arquivos .PDFs presente no diretorio 'data'
-
-        Returns:
-            Lista de string com o nome dos arquivos .PDFs
-        """
-        data_directory = data_dir_scan.get_data_directory()
-        return [item for item in os.listdir(data_directory) if '.pdf' in item]
