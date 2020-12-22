@@ -7,7 +7,7 @@ class number_helper:
     @staticmethod
     def is_number(string):
         commas_number = string.count(',')
-        if (commas_number > 1):
+        if commas_number > 1:
             return (False, math.nan)
         else:
             return number_helper.__is_number_with_at_least_one_dot(string)
