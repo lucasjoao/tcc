@@ -23,12 +23,11 @@ class pdf_extract:
         return dds.data_dir_scan.get_data_directory() + filename
 
     @staticmethod
-    def get_text_pytesseract(filename):
+    def get_text_pytesseract(filename, custom_config_extact_lib):
         pages = convert_from_path(pdf_extract.__path_from_filename(filename), 500)
 
         config_to_speed_up = '-c tessedit_do_invert=0'
-        config_to_improve_result = '--psm 6'
-        config = config_to_speed_up + ' ' + config_to_improve_result
+        config = config_to_speed_up + ' ' + custom_config_extact_lib
 
         pdf_text = ''
         for page in pages:

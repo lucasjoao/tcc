@@ -13,7 +13,7 @@ from src.technique import stemming as st
 
 class manager:
 
-    def __init__(self, reports_filename, text_extract_lib='pypdf2'):
+    def __init__(self, reports_filename, text_extract_lib='pypdf2', custom_config_extact_lib=''):
         nltk.download('rslp')
         nltk.download('punkt')
         nltk.download('stopwords')
@@ -40,7 +40,7 @@ class manager:
         if text_extract_lib == 'pypdf2':
             pdf_text = pe.pdf_extract.get_text_pypdf2(report_filename)
         elif text_extract_lib == 'pytesseract':
-            pdf_text = pe.pdf_extract.get_text_pytesseract(report_filename)
+            pdf_text = pe.pdf_extract.get_text_pytesseract(report_filename, custom_config_extact_lib)
         return pdf_text
 
     def __common_process(self, indicator):
