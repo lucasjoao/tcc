@@ -4,15 +4,15 @@ from src.helper import result_helper as rh
 from data import data as data
 
 
-class TestsWeg20192T(unittest.TestCase):
+class TestsWeg20151T(unittest.TestCase):
 
     filename = None
     manager_pytesseract = None
 
     @classmethod
     def setUpClass(cls):
-        cls.filename = 'weg_2019_2T.pdf'
-        cls.manager_pytesseract = m.manager([cls.filename], 'pytesseract')
+        cls.filename = 'weg_2015_1T.pdf'
+        cls.manager_pytesseract = m.manager([cls.filename], 'pytesseract', '--psm 6')
 
     @classmethod
     def tearDownClass(cls):
@@ -29,11 +29,9 @@ class TestsWeg20192T(unittest.TestCase):
                       'lucro líquido (R$): valor (pytesseract)')
 
     def test_lucro_liquido_number(self):
-        lucro_liquido_number_pytesseract = self.manager_pytesseract.run_lucro_liquido_number()
-        result_pytesseract = lucro_liquido_number_pytesseract[self.filename]
+        result = self.manager_pytesseract.run_lucro_liquido_number()[self.filename]
 
-        self.assertEqual(len(result_pytesseract), 0,
-                         'lucro líquido (número após conjunto de busca): tamanho resultado (pytesseract)')
+        self.assertEqual(len(result), 0, 'lucro líquido (número após conjunto de busca): tamanho resultado')
 
     def test_patrimonio_liquido_monetary(self):
         result = self.manager_pytesseract.run_patrimonio_liquido_monetary()[self.filename]
@@ -61,11 +59,12 @@ class TestsWeg20192T(unittest.TestCase):
         self.assertEqual(len(result), 0, 'ROE (número após conjunto de busca): tamanho resultado')
 
     def test_roe_calculate(self):
-        roe_calculate_pytesseract = self.manager_pytesseract.run_calculate_roe()
-        result_pytesseract = roe_calculate_pytesseract[self.filename]
+        calculate_roe_pytesseract = self.manager_pytesseract.run_calculate_roe()
+        result_pytesseract = calculate_roe_pytesseract[self.filename]
 
         self.assertEqual(len(result_pytesseract), 1, 'ROE por cálculo: tamanho resultado (pytesseract)')
-        self.assertNotIn(data.ROE[self.filename], result_pytesseract, 'ROE por cálculo: valor')
+        self.assertNotIn(data.ROE[self.filename], result_pytesseract,
+                         'ROE por cálculo: tamanho resultado (pytesseract)')
 
 
 if __name__ == '__main__':

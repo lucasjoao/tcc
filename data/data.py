@@ -1,7 +1,7 @@
 # NÃO ESTÁ COMPLETO E NEM GARANTO CERTEZA EM TODOS OS VALORES
 
 LUCRO_LIQUIDO = {
-                 'ambev_2019_1T.pdf': 2762.0,
+                 'ambev_2019_1T.pdf': 2749.1,
                  'ambev20192T': 2615,
                  'ambev20193T': 2604,
                  'ambev20194T': 4219,
@@ -28,11 +28,12 @@ LUCRO_LIQUIDO = {
               }
 
 PATRIMONIO_LIQUIDO = {
-                      'ambev20191T': 60490,
+                      'ambev_2019_1T.pdf': 60490.0,
                       'ambev20192T': 62928,
                       'ambev20193T': 67021,
                       'ambev20194T': 62556,
                       'engie_2020_2T.pdf': 7434743,
+                      'fleury_2019_3T.pdf': 1750.1,
                       'fleury_2020_2T.pdf': 1549453.0,
                       'gerdau_2015_3T.pdf': 36012381.0,
                       'gerdau_2017_1T.pdf': 24916345.0,
@@ -53,11 +54,12 @@ PATRIMONIO_LIQUIDO = {
                      }
 
 ROE = {
-       'ambev20191T': 4.54,
+       'ambev_2019_1T.pdf': 4.566043974210613,
        'ambev20192T': 4.15,
        'ambev20193T': 3.88,
        'ambev20194T': 6.74,
        'engie_2020_2T.pdf': 0.010300288792766609,
+       'fleury_2019_3T.pdf': 5.416833323810068,
        'fleury_2020_2T.pdf': -0.004730701737968173,
        'gerdau20153T': -0.53,
        'gerdau_2017_1T.pdf': 3.33,

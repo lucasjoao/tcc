@@ -19,5 +19,14 @@ test-pypdf2:
 test-pytesseract-default:
 	@poetry run python  -m unittest discover ./tests/reports/pytesseract/
 
+test-pytesseract-config01:
+	@poetry run python  -m unittest discover ./tests/reports/pytesseract01/
+
+test-pytesseract-config02:
+	@poetry run python  -m unittest discover ./tests/reports/pytesseract02/
+
+test-pytesseract-config03:
+	@poetry run python  -m unittest discover ./tests/reports/pytesseract03/
+
 linter:
 	@poetry run flake8 . --count --max-complexity=10 --max-line-length=127 --statistics

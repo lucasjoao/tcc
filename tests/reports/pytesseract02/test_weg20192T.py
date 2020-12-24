@@ -12,7 +12,7 @@ class TestsWeg20192T(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.filename = 'weg_2019_2T.pdf'
-        cls.manager_pytesseract = m.manager([cls.filename], 'pytesseract')
+        cls.manager_pytesseract = m.manager([cls.filename], 'pytesseract', '--psm 6')
 
     @classmethod
     def tearDownClass(cls):
