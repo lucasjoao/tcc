@@ -1,7 +1,5 @@
 import unittest
 from src import manager as m
-from src.helper import result_helper as rh
-from data import data as data
 
 
 class TestsWeg20192T(unittest.TestCase):
@@ -22,11 +20,8 @@ class TestsWeg20192T(unittest.TestCase):
     def test_lucro_liquido_monetary(self):
         lucro_liquido_monetary_pytesseract = self.manager_pytesseract.run_lucro_liquido_monetary()
         result_pytesseract = lucro_liquido_monetary_pytesseract[self.filename]
-        numbers_from_result_pytesseract = rh.result_helper.get_numbers_as_list(result_pytesseract)
 
-        self.assertEqual(len(result_pytesseract), 1, 'lucro líquido (R$): tamanho resultado (pytesseract)')
-        self.assertIn(data.LUCRO_LIQUIDO[self.filename], numbers_from_result_pytesseract,
-                      'lucro líquido (R$): valor (pytesseract)')
+        self.assertEqual(len(result_pytesseract), 0, 'lucro líquido (R$): tamanho resultado (pytesseract)')
 
     def test_lucro_liquido_number(self):
         lucro_liquido_number_pytesseract = self.manager_pytesseract.run_lucro_liquido_number()
@@ -43,12 +38,9 @@ class TestsWeg20192T(unittest.TestCase):
     def test_patrimonio_liquido_number(self):
         patrimonio_liquido_number_pytesseract = self.manager_pytesseract.run_patrimonio_liquido_number()
         result_pytesseract = patrimonio_liquido_number_pytesseract[self.filename]
-        numbers_from_result_pytesseract = rh.result_helper.get_numbers_as_list(result_pytesseract)
 
-        self.assertEqual(len(result_pytesseract), 1,
+        self.assertEqual(len(result_pytesseract), 0,
                          'patrimônio líquido (número após conjunto de busca): tamanho resultado (pytesseract)')
-        self.assertNotIn(data.PATRIMONIO_LIQUIDO[self.filename], numbers_from_result_pytesseract,
-                         'patrimônio líquido (número após conjunto de busca): valor (pytesseract)')
 
     def test_roe_monetary(self):
         result = self.manager_pytesseract.run_roe_monetary()[self.filename]
@@ -64,8 +56,7 @@ class TestsWeg20192T(unittest.TestCase):
         roe_calculate_pytesseract = self.manager_pytesseract.run_calculate_roe()
         result_pytesseract = roe_calculate_pytesseract[self.filename]
 
-        self.assertEqual(len(result_pytesseract), 1, 'ROE por cálculo: tamanho resultado (pytesseract)')
-        self.assertNotIn(data.ROE[self.filename], result_pytesseract, 'ROE por cálculo: valor')
+        self.assertEqual(len(result_pytesseract), 0, 'ROE por cálculo: tamanho resultado (pytesseract)')
 
 
 if __name__ == '__main__':
