@@ -24,7 +24,7 @@ class TestsAmbev20191T(unittest.TestCase):
         result_pytesseract = lucro_liquido_monetary_pytesseract[self.filename]
         numbers_from_result_pytesseract = rh.result_helper.get_numbers_as_list(result_pytesseract)
 
-        self.assertEqual(len(result_pytesseract), 3, 'lucro líquido (R$): tamanho resultado (pytesseract)')
+        self.assertEqual(len(result_pytesseract), 4, 'lucro líquido (R$): tamanho resultado (pytesseract)')
         self.assertNotIn(data.LUCRO_LIQUIDO[self.filename], numbers_from_result_pytesseract,
                          'lucro líquido (R$): valor (pytesseract)')
 
@@ -34,8 +34,8 @@ class TestsAmbev20191T(unittest.TestCase):
         numbers_from_result = rh.result_helper.get_numbers_as_list(result_pytesseract)
 
         self.assertEqual(len(result_pytesseract), 1, 'lucro líquido (número após conjunto de busca): tamanho resultado')
-        self.assertIn(data.LUCRO_LIQUIDO[self.filename], numbers_from_result,
-                      'lucro líquido (número após conjunto de busca): valor')
+        self.assertNotIn(data.LUCRO_LIQUIDO[self.filename], numbers_from_result,
+                         'lucro líquido (número após conjunto de busca): valor')
 
     def test_patrimonio_liquido_monetary(self):
         result = self.manager_pytesseract.run_patrimonio_liquido_monetary()[self.filename]
@@ -66,7 +66,7 @@ class TestsAmbev20191T(unittest.TestCase):
         calculate_roe_pytesseract = self.manager_pytesseract.run_calculate_roe()
         result_pytesseract = calculate_roe_pytesseract[self.filename]
 
-        self.assertEqual(len(result_pytesseract), 8, 'ROE por cálculo: tamanho resultado (pytesseract)')
+        self.assertEqual(len(result_pytesseract), 10, 'ROE por cálculo: tamanho resultado (pytesseract)')
         self.assertNotIn(result_pytesseract, data.ROE[self.filename], 'ROE por cálculo: valor')
 
 

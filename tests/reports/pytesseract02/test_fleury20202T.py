@@ -1,5 +1,7 @@
 import unittest
 from src import manager as m
+from src.helper import result_helper as rh
+from data import data as data
 
 
 class TestsFleury20202T(unittest.TestCase):
@@ -36,9 +38,12 @@ class TestsFleury20202T(unittest.TestCase):
     def test_patrimonio_liquido_number(self):
         patrimonio_liquido_number_pytesseract = self.manager_pytesseract.run_patrimonio_liquido_number()
         result_pytesseract = patrimonio_liquido_number_pytesseract[self.filename]
+        numbers_from_result = rh.result_helper.get_numbers_as_list(result_pytesseract)
 
-        self.assertEqual(len(result_pytesseract), 0,
+        self.assertEqual(len(result_pytesseract), 2,
                          'patrimônio líquido (número após conjunto de busca): tamanho resultado (pytesseract)')
+        self.assertIn(data.PATRIMONIO_LIQUIDO[self.filename], numbers_from_result,
+                      'patrimônio líquido (número após conjunto de busca): valor')
 
     def test_roe_monetary(self):
         result = self.manager_pytesseract.run_roe_monetary()[self.filename]

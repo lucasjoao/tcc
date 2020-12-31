@@ -18,6 +18,7 @@ LUCRO_LIQUIDO = {
 
 PATRIMONIO_LIQUIDO = {
                       'ambev_2019_1T.pdf': 60490.0,
+                      'engie_2019_2T.pdf': 7194673.0,
                       'engie_2020_2T.pdf': 7434743,
                       'fleury_2019_3T.pdf': 1750.1,
                       'fleury_2020_2T.pdf': 1549453.0,
@@ -33,6 +34,7 @@ PATRIMONIO_LIQUIDO = {
 
 ROE = {
        'ambev_2019_1T.pdf': 4.566043974210613,
+       'engie_2019_2T.pdf': 0.005356741022142354,
        'engie_2020_2T.pdf': 0.010300288792766609,
        'fleury_2019_3T.pdf': 5.416833323810068,
        'fleury_2020_2T.pdf': -0.004730701737968173,

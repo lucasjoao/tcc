@@ -46,8 +46,11 @@ class TestsEngie20192T(unittest.TestCase):
 
     def test_patrimonio_liquido_number(self):
         result = self.manager_pytesseract.run_patrimonio_liquido_number()[self.filename]
+        numbers_from_result = rh.result_helper.get_numbers_as_list(result)
 
-        self.assertEqual(len(result), 0, 'patrimônio líquido (número após conjunto de busca): tamanho resultado')
+        self.assertEqual(len(result), 1, 'patrimônio líquido (número após conjunto de busca): tamanho resultado')
+        self.assertIn(data.PATRIMONIO_LIQUIDO[self.filename], numbers_from_result,
+                      'patrimônio líquido (número após conjunto de busca): valor')
 
     def test_roe_monetary(self):
         result = self.manager_pytesseract.run_roe_monetary()[self.filename]
@@ -60,9 +63,10 @@ class TestsEngie20192T(unittest.TestCase):
         self.assertEqual(len(result), 0, 'ROE (número após conjunto de busca): tamanho resultado')
 
     def test_roe_calculate(self):
-        result = self.manager_pytesseract.run_roe_calculate()[self.filename]
+        result = self.manager_pytesseract.run_calculate_roe()[self.filename]
 
-        self.assertEqual(len(result), 0, 'ROE por cálculo: tamanho resultado')
+        self.assertEqual(len(result), 8, 'ROE por cálculo: tamanho resultado')
+        self.assertIn(data.ROE[self.filename], result, 'ROE por cálculo: valor')
 
 
 if __name__ == '__main__':

@@ -24,7 +24,7 @@ class TestsEngie20202T(unittest.TestCase):
         result_pytesseract = lucro_liquido_monetary_pytesseract[self.filename]
         numbers_from_result_pytesseract = rh.result_helper.get_numbers_as_list(result_pytesseract)
 
-        self.assertEqual(len(result_pytesseract), 5, 'lucro líquido (R$): tamanho resultado (pytesseract)')
+        self.assertEqual(len(result_pytesseract), 6, 'lucro líquido (R$): tamanho resultado (pytesseract)')
         self.assertIn(data.LUCRO_LIQUIDO[self.filename],
                       numbers_from_result_pytesseract,
                       'lucro líquido (R$): valor (pytesseract)')
@@ -32,8 +32,11 @@ class TestsEngie20202T(unittest.TestCase):
     def test_lucro_liquido_number(self):
         lucro_liquido_number_pytesseract = self.manager_pytesseract.run_lucro_liquido_number()
         result_pytesseract = lucro_liquido_number_pytesseract[self.filename]
+        numbers_from_result_pytesseract = rh.result_helper.get_numbers_as_list(result_pytesseract)
 
-        self.assertEqual(len(result_pytesseract), 0, 'lucro líquido (número após conjunto de busca): tamanho resultado')
+        self.assertEqual(len(result_pytesseract), 2, 'lucro líquido (número após conjunto de busca): tamanho resultado')
+        self.assertIn(data.LUCRO_LIQUIDO[self.filename], numbers_from_result_pytesseract,
+                      'lucro líquido (número após conjunto de busca): valor')
 
     def test_patrimonio_liquido_monetary(self):
         result = self.manager_pytesseract.run_patrimonio_liquido_monetary()[self.filename]
@@ -63,7 +66,7 @@ class TestsEngie20202T(unittest.TestCase):
         roe_calculate_pytesseract = self.manager_pytesseract.run_calculate_roe()
         result_pytesseract = roe_calculate_pytesseract[self.filename]
 
-        self.assertEqual(len(result_pytesseract), 5, 'ROE por cálculo: tamanho resultado (pytesseract)')
+        self.assertEqual(len(result_pytesseract), 8, 'ROE por cálculo: tamanho resultado (pytesseract)')
         self.assertIn(data.ROE[self.filename], result_pytesseract, 'ROE por cálculo: valor (pytesseract)')
 
 
