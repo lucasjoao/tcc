@@ -29,4 +29,4 @@ test-pytesseract-config03:
 	@poetry run python  -m unittest discover ./tests/reports/pytesseract03/
 
 linter:
-	@poetry run flake8 . --count --max-complexity=10 --max-line-length=127 --statistics
+	@poetry run flake8 src tests data --count --max-complexity=10 --max-line-length=127 --statistics

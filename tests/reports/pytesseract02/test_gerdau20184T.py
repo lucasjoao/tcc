@@ -3,6 +3,7 @@ from src import manager as m
 from src.helper import result_helper as rh
 from data import data as data
 
+
 class TestsGerdau20184T(unittest.TestCase):
 
     filename = None
