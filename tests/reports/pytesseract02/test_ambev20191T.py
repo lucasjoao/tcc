@@ -67,7 +67,7 @@ class TestsAmbev20191T(unittest.TestCase):
         result_pytesseract = calculate_roe_pytesseract[self.filename]
 
         self.assertEqual(len(result_pytesseract), 10, 'ROE por cálculo: tamanho resultado (pytesseract)')
-        self.assertNotIn(result_pytesseract, data.ROE[self.filename], 'ROE por cálculo: valor')
+        self.assertNotIn(data.ROE[self.filename], result_pytesseract, 'ROE por cálculo: valor')
 
 
 if __name__ == '__main__':
