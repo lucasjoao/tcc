@@ -42,9 +42,12 @@ class TestsGerdau20192T(unittest.TestCase):
     def test_patrimonio_liquido_number(self):
         patrimonio_liquido_number_pytesseract = self.manager_pytesseract.run_patrimonio_liquido_number()
         result_pytesseract = patrimonio_liquido_number_pytesseract[self.filename]
+        numbers_from_result = rh.result_helper.get_numbers_as_list(result_pytesseract)
 
-        self.assertEqual(len(result_pytesseract), 0,
+        self.assertEqual(len(result_pytesseract), 2,
                          'patrimônio líquido (número após conjunto de busca): tamanho resultado (pytesseract)')
+        self.assertIn(data.PATRIMONIO_LIQUIDO[self.filename], numbers_from_result,
+                      'patrimônio líquido (número após conjunto de busca): valor')
 
     def test_roe_monetary(self):
         result = self.manager_pytesseract.run_roe_monetary()[self.filename]
@@ -60,7 +63,8 @@ class TestsGerdau20192T(unittest.TestCase):
         calculate_roe_pytesseract = self.manager_pytesseract.run_calculate_roe()
         result_pytesseract = calculate_roe_pytesseract[self.filename]
 
-        self.assertEqual(len(result_pytesseract), 0, 'ROE por cálculo: tamanho resultado (pytesseract)')
+        self.assertEqual(len(result_pytesseract), 2, 'ROE por cálculo: tamanho resultado (pytesseract)')
+        self.assertNotIn(data.ROE[self.filename], result_pytesseract, 'ROE por cálculo: valor')
 
 
 if __name__ == '__main__':
