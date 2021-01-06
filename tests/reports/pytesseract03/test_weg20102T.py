@@ -1,7 +1,5 @@
 import unittest
 from src import manager as m
-from src.helper import result_helper as rh
-from data import data as data
 
 
 class TestsWeg20102T(unittest.TestCase):
@@ -22,11 +20,8 @@ class TestsWeg20102T(unittest.TestCase):
     def test_lucro_liquido_monetary(self):
         lucro_liquido_monetary_pytesseract = self.manager_pytesseract.run_lucro_liquido_monetary()
         result_pytesseract = lucro_liquido_monetary_pytesseract[self.filename]
-        numbers_from_result_pytesseract = rh.result_helper.get_numbers_as_list(result_pytesseract)
 
-        self.assertEqual(len(result_pytesseract), 1, 'lucro líquido (R$): tamanho resultado (pytesseract)')
-        self.assertIn(data.LUCRO_LIQUIDO[self.filename], numbers_from_result_pytesseract,
-                      'lucro líquido (R$): valor (pytesseract)')
+        self.assertEqual(len(result_pytesseract), 0, 'lucro líquido (R$): tamanho resultado (pytesseract)')
 
     def test_lucro_liquido_number(self):
         result = self.manager_pytesseract.run_lucro_liquido_number()[self.filename]

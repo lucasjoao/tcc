@@ -1,7 +1,5 @@
 import unittest
 from src import manager as m
-from src.helper import result_helper as rh
-from data import data as data
 
 
 class TestsGerdau20192T(unittest.TestCase):
@@ -27,12 +25,9 @@ class TestsGerdau20192T(unittest.TestCase):
     def test_lucro_liquido_number(self):
         lucro_liquido_number_pytesseract = self.manager_pytesseract.run_lucro_liquido_number()
         result_pytesseract = lucro_liquido_number_pytesseract[self.filename]
-        numbers_from_result_pytesseract = rh.result_helper.get_numbers_as_list(result_pytesseract)
 
-        self.assertEqual(len(result_pytesseract), 1,
+        self.assertEqual(len(result_pytesseract), 0,
                          'lucro líquido (número após conjunto de busca): tamanho resultado (pytesseract)')
-        self.assertNotIn(data.LUCRO_LIQUIDO[self.filename], numbers_from_result_pytesseract,
-                         'lucro líquido (número após conjunto de busca): valor (pytesseract)')
 
     def test_patrimonio_liquido_monetary(self):
         result = self.manager_pytesseract.run_patrimonio_liquido_monetary()[self.filename]
