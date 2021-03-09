@@ -5,14 +5,18 @@ class data_dir_scan:
 
     __src = 'src'
     __tests = 'tests'
+    __data = 'data'
 
     @staticmethod
     def get_data_directory():
         current_directory = os.getcwd()
         directory_splitted = current_directory.split('/')
 
-        if 'data' == directory_splitted[-1]:  # last element from list
+        if data_dir_scan.__data == directory_splitted[-1]:  # last element from list
             return './'
+
+        if 'tcc' == directory_splitted[-1]:
+            return data_dir_scan.__data + '/'
 
         directory_founded = None
         if data_dir_scan.__src in directory_splitted:
@@ -25,4 +29,4 @@ class data_dir_scan:
 
         position = directory_splitted.index(directory_founded)
         levels_below = len(directory_splitted) - position
-        return ('../' * levels_below) + 'data/'
+        return ('../' * levels_below) + data_dir_scan.__data + '/'

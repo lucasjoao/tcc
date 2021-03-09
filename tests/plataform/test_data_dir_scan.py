@@ -9,6 +9,12 @@ class TestsDataDirScan(unittest.TestCase):
     @mock.patch('os.getcwd')
     def test_get_data_directory_from_root(self, mock_getcwd):
         mock_getcwd.return_value = '/home/tcc'
+        self.assertEqual(dds.data_dir_scan.get_data_directory(), 'data/')
+        mock_getcwd.assert_called_once()
+
+    @mock.patch('os.getcwd')
+    def test_get_data_directory_from_stranger_place(self, mock_getcwd):
+        mock_getcwd.return_value = '/home'
         self.assertRaises(Exception, dds.data_dir_scan.get_data_directory)
         mock_getcwd.assert_called_once()
 
