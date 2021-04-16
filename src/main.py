@@ -13,11 +13,11 @@ preprocessor = pp.preprocessor()
 stemmer = st.stemming()
 filter = f.filters()
 searcher = s.searcher()
-target_sets = [frozenset([stemmer.stem_word('gosto')])]
+target_sets = [frozenset([stemmer.stem_word('abacate')])]
 
-text_example = 'Eu gosto de abacate as 6 da tarde. ' \
-               'Gosto de tangerina quando custa R$ 1.00. ' \
-               '3 - também acho bom o gosto do abacaxi.'
+text_example = 'Abacate 10 ' \
+               'Tangerina 20 ' \
+               'Abacate maduro 30'
 
 text_example_preprocessed = preprocessor.execute(text_example)
 print(text_example_preprocessed)
@@ -33,3 +33,6 @@ print(text_example_filtered_in_seq)
 
 example_monetary_value = searcher.monetary_value(text_example_filtered_in_seq)
 print(example_monetary_value)
+
+example_after_target_set = searcher.after_target_set_number_value(text_example_filtered_in_seq, target_sets)
+print(example_after_target_set)
