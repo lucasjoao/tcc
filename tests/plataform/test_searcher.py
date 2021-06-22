@@ -49,6 +49,37 @@ class TestsSearcher(unittest.TestCase):
         self.assertEqual(len(result), 2)
         self.assertEqual([{'number': 2.5, 'possible_size': '.'}, {'number': 1.0, 'possible_size': '.'}], result)
 
+    def test_after_target_set_empty_inputs(self):
+        result = self.searcher.after_target_set_number_value([[]], [])
+        self.assertEqual(len(result), 0)
+
+    def test_after_target_set_success(self):
+        candidate_sentences = [['eu', 'gost', 'abacat', '6', 'tard', '.'],
+                               ['3', '-', 'ach', 'bom', 'gost', 'abacax', 'barat', '2.50', '.'],
+                               ['gost', 'tangerin', 'e', 'abacat', '1.00', '.']]
+        result = self.searcher.after_target_set_number_value(candidate_sentences, [['abacat']])
+        self.assertEqual(len(result), 2)
+        self.assertEqual([{'number': 6, 'possible_size': 'tard'}, {'number': 1.0, 'possible_size': '.'}], result)
+
+    def test_after_target_set_invalid_position(self):
+        candidate_sentences = [['6']]
+        result = self.searcher.after_target_set_number_value(candidate_sentences, [['abacat']])
+        self.assertEqual(len(result), 0)
+
+    def test_after_target_set_without_number(self):
+        candidate_sentences = [['eu', 'gost', 'abacat', 'tard', '.'],
+                               ['-', 'ach', 'bom', 'gost', 'abacax', 'barat', '.'],
+                               ['gost', 'tangerin', 'e', 'abacat', '.']]
+        result = self.searcher.after_target_set_number_value(candidate_sentences, [['abacat']])
+        self.assertEqual(len(result), 0)
+
+    def test_after_target_set_not_in_target_set(self):
+        candidate_sentences = [['eu', 'gost', 'abacat', '6', 'tard', '.'],
+                               ['3', '-', 'ach', 'bom', 'gost', 'abacax', 'barat', '2.50', '.'],
+                               ['gost', 'tangerin', 'e', 'abacat', '1.00', '.']]
+        result = self.searcher.after_target_set_number_value(candidate_sentences, [['lofi']])
+        self.assertEqual(len(result), 0)
+
 
 if __name__ == '__main__':
     unittest.main()
